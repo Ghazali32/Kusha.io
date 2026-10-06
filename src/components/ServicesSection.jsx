@@ -30,13 +30,12 @@ export function ServicesSection({ onOpenContact }) {
     "data-analytics": Database,
     "ai-ml": BrainCircuit,
     "iot-automation": Cpu,
-    "cybersecurity-qa": ShieldAlert,
     "system-integration": RefreshCw,
     "it-consulting": Lightbulb,
     "dedicated-teams": Users
   };
 
-  const categories = ['All', 'Product & App Engineering', 'Cloud, Data & AI', 'Modernization & Security', 'Dedicated Teams & Consulting'];
+  const categories = ['All', 'Product & App Engineering', 'Cloud, Data & AI', 'System Modernization', 'Dedicated Teams & Consulting'];
 
   const filterService = (service) => {
     if (activeCategory === 'All') return true;
@@ -46,8 +45,8 @@ export function ServicesSection({ onOpenContact }) {
     if (activeCategory === 'Cloud, Data & AI') {
       return ['cloud-devops', 'data-analytics', 'ai-ml', 'iot-automation'].includes(service.id);
     }
-    if (activeCategory === 'Modernization & Security') {
-      return ['cybersecurity-qa', 'system-integration'].includes(service.id);
+    if (activeCategory === 'System Modernization') {
+      return ['system-integration'].includes(service.id);
     }
     if (activeCategory === 'Dedicated Teams & Consulting') {
       return ['it-consulting', 'dedicated-teams'].includes(service.id);
@@ -71,7 +70,7 @@ export function ServicesSection({ onOpenContact }) {
             Engineering Solutions Built for <span className="text-gradient-lime">Business Outcomes</span>
           </h2>
           <p className="section-subtitle">
-            Kusha provides end-to-end technology services designed around business outcomes — from early-stage product development to enterprise-scale modernization.
+            Kusha.io provides end-to-end technology services designed around business outcomes — from early-stage product development to enterprise-scale modernization.
           </p>
         </div>
 
@@ -240,7 +239,7 @@ export function ServicesSection({ onOpenContact }) {
                 <div style={{ background: 'var(--bg-card-elevated)', padding: '20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
                   <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#ffffff', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <Sparkles size={16} color="var(--lime-primary)" />
-                    <span>What Kusha Provides</span>
+                    <span>What Kusha.io Provides</span>
                   </h4>
                   <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {selectedService.whatKushaProvides.map((item, idx) => (

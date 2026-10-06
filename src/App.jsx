@@ -9,7 +9,6 @@ import { TechStackSection } from './components/TechStackSection';
 import { ProcessSection } from './components/ProcessSection';
 import { EngagementModelsSection } from './components/EngagementModelsSection';
 import { TrustAndCaseStudyBlueprint } from './components/TrustAndCaseStudyBlueprint';
-import { InsightsSection } from './components/InsightsSection';
 import { FaqSection } from './components/FaqSection';
 import { ContactModalAndSection } from './components/ContactModalAndSection';
 import { Footer } from './components/Footer';
@@ -87,13 +86,8 @@ export function App() {
         onOpenContact={handleOpenContact} 
       />
 
-      {/* Why Kusha, Trust Badges, & Case Study Blueprints */}
+      {/* Why Kusha.io & Trust Badges */}
       <TrustAndCaseStudyBlueprint 
-        onOpenContact={handleOpenContact} 
-      />
-
-      {/* Strategic Engineering Insights (24 Playbooks) */}
-      <InsightsSection 
         onOpenContact={handleOpenContact} 
       />
 

@@ -45,7 +45,7 @@ export function NotificationDrawer({ isOpen, onClose, onOpenContact }) {
             </div>
             <div>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#ffffff' }}>Operational Feed</h3>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Kusha Global Delivery Engine</span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Kusha.io Global Delivery Engine</span>
             </div>
           </div>
 

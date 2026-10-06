@@ -107,7 +107,7 @@ export function ContactModalAndSection({ isOpen, onClose, initialType = 'project
                 </p>
 
                 <h4 style={{ fontSize: '0.88rem', fontWeight: 700, color: '#ffffff', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                  Reasons to Contact Kusha:
+                  Reasons to Contact Kusha.io:
                 </h4>
 
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px' }}>

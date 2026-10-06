@@ -44,13 +44,21 @@ export function InteractiveEstimator({ onOpenContact }) {
         architecture: 'API Gateways, Microservices, Event-Driven Kafka / RabbitMQ',
         benefits: 'Continuous migration without service disruption, lower long-term technical debt'
       };
+    } else if (serviceType === 'IoT & Automation') {
+      return {
+        model: 'Hardware-to-Cloud Integration Pod',
+        badge: 'Connected Systems',
+        sprints: 'Iterative Device & Cloud Sprints',
+        architecture: 'MQTT, WebSockets, AWS IoT Core / Azure IoT, Edge Telemetry & Real-Time Dashboards',
+        benefits: 'Low-latency telemetry streaming, reliable edge device protocols, end-to-end automation'
+      };
     } else {
       return {
         model: 'Long-Term Strategic Technology Partnership',
         badge: 'European Accountability + India Scale',
         sprints: 'Continuous Delivery Roadmap',
         architecture: 'Enterprise-grade multi-tenant architecture with high-availability cloud SLA',
-        benefits: 'Netherlands contract governance (KVK 98986708), dedicated pods, proactive optimization'
+        benefits: 'Netherlands contract governance, dedicated pods, proactive optimization'
       };
     }
   };
@@ -108,6 +116,7 @@ export function InteractiveEstimator({ onOpenContact }) {
                   'Cloud & DevOps Pipeline',
                   'AI & Generative ML',
                   'Data & Analytics Lake',
+                  'IoT & Automation',
                   'Dedicated Dev Pod'
                 ].map((s) => (
                   <button

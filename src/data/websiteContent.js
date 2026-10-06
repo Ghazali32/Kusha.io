@@ -2,8 +2,8 @@ export const websiteData = {
   company: {
     name: "Kusha.io",
     tagline: "Global Technology Partner for Ambitious Businesses",
-    subheadline: "Netherlands-registered technology company helping startups, scale-ups, and enterprises design, build, and scale software that works.",
-    description: "Kusha is a Netherlands-registered technology company helping startups, scale-ups, and enterprises design, build, and scale software that works. From product ideas to enterprise systems, we deliver custom software, cloud, data, and AI solutions through a global delivery model built for quality, speed, and long-term partnership.",
+    subheadline: "Netherlands-based technology company helping startups, scale-ups, and enterprises turn ambitious ideas into reliable, scalable technology.",
+    description: "Kusha.io is a Netherlands-based technology company helping startups, scale-ups, and enterprises turn ambitious ideas into reliable, scalable technology. We design and build custom software, cloud platforms, data systems, and AI solutions, from early product development to complex enterprise transformation.",
     registration: "Registered in the Netherlands (KVK No. 98986708)",
     kvk: "98986708",
     email: "info@kusha.io",
@@ -22,7 +22,7 @@ export const websiteData = {
       }
     },
     targetMarkets: [
-      "Netherlands", "Europe", "UK", "USA", "Australia", "Singapore", "Canada", "Middle East"
+      "Europe", "USA", "Middle East", "India"
     ],
     purpose: "We exist to help businesses solve real problems with technology — not to sell software for its own sake. Every engagement starts with understanding what a client is trying to achieve, and works backward from there to the right technical solution.",
     mission: "To be a dependable, transparent technology partner for businesses around the world — helping them build, modernize, and scale software with confidence.",
@@ -96,70 +96,8 @@ export const websiteData = {
       cta: "Discuss Your Product Idea"
     },
     {
-      id: "web-mobile",
-      number: "02",
-      title: "Web & Mobile Development",
-      shortDesc: "Responsive web platforms and native or cross-platform mobile apps for iOS and Android.",
-      whatItIs: "Development of modern web applications, high-performance websites, and native or cross-platform mobile apps.",
-      whatKushaProvides: [
-        "Web application development (SPAs & SSR)",
-        "Responsive web platforms",
-        "Native iOS and Android app development",
-        "Cross-platform mobile apps (React Native / Flutter)"
-      ],
-      problemsSolved: [
-        "Need a customer-facing presence that performs well and scales under load",
-        "Need one unified codebase that works seamlessly across iOS and Android",
-        "Existing web/mobile products are slow, outdated, or hard to maintain"
-      ],
-      typicalUseCases: [
-        "Customer self-service portals",
-        "E-commerce & marketplace platforms",
-        "Booking and reservation systems",
-        "Consumer and enterprise mobile apps"
-      ],
-      businessBenefits: [
-        "Consistent user experience across all devices",
-        "Faster development cycles through smart code reuse",
-        "Platforms built to scale with exponential user growth"
-      ],
-      capabilities: ["React", "Next.js", "Vue", "React Native", "Flutter", "Swift", "Kotlin"],
-      cta: "Talk to Us About Your Web or App Project"
-    },
-    {
-      id: "cloud-devops",
-      number: "03",
-      title: "Cloud & DevOps",
-      shortDesc: "Cloud architecture, migration, and CI/CD automation pipelines that scale with you.",
-      whatItIs: "Cloud architecture, migration, and automation pipelines that support fast, reliable software delivery.",
-      whatKushaProvides: [
-        "Cloud solution design & multi-cloud architecture",
-        "Zero-downtime cloud migration",
-        "Infrastructure setup & orchestration",
-        "CI/CD automated pipeline implementation",
-        "DevOps process design & observability"
-      ],
-      problemsSolved: [
-        "On-premise infrastructure is costly or difficult to scale",
-        "Deployments are slow, manual, or prone to downtime",
-        "Systems need superior reliability, failover, and observability"
-      ],
-      typicalUseCases: [
-        "Migrating legacy applications to AWS / GCP / Azure",
-        "Setting up auto-scaling infrastructure for growing products",
-        "Automating build, test, and deploy pipelines"
-      ],
-      businessBenefits: [
-        "Lower infrastructure overhead and server costs",
-        "Faster and safer release cadence",
-        "Improved system uptime, resilience, and scalability"
-      ],
-      capabilities: ["AWS", "Google Cloud", "Azure", "Docker", "Kubernetes", "Terraform", "GitHub Actions"],
-      cta: "Plan Your Cloud Strategy"
-    },
-    {
       id: "data-analytics",
-      number: "04",
+      number: "02",
       title: "Data Engineering & Analytics",
       shortDesc: "Data pipelines, warehousing, and analytics that turn raw information into strategic decisions.",
       whatItIs: "Building the infrastructure and data pipelines that collect, clean, process, and make sense of business data.",
@@ -189,7 +127,7 @@ export const websiteData = {
     },
     {
       id: "ai-ml",
-      number: "05",
+      number: "03",
       title: "AI & Machine Learning",
       shortDesc: "Practical AI, machine learning, and generative AI integrations that create measurable value.",
       whatItIs: "Practical application of AI, machine learning, and generative AI to solve specific business problems without the hype.",
@@ -219,97 +157,8 @@ export const websiteData = {
       cta: "Explore AI for Your Business"
     },
     {
-      id: "iot-automation",
-      number: "06",
-      title: "IoT & Automation",
-      shortDesc: "Connected devices, telemetry, and workflow automation that eliminate manual operational bottlenecks.",
-      whatItIs: "Connecting physical devices to cloud software systems, and automating repetitive business workflows.",
-      whatKushaProvides: [
-        "IoT application & telemetry development",
-        "Device-to-cloud secure integration",
-        "End-to-end business process automation"
-      ],
-      problemsSolved: [
-        "Manual, repetitive operational tasks draining team hours",
-        "Lack of real-time visibility into physical assets or hardware",
-        "Disconnected hardware and legacy software systems"
-      ],
-      typicalUseCases: [
-        "Remote equipment and sensor monitoring",
-        "Connected smart hardware product features",
-        "Multi-step approval and operational workflow automation",
-        "Operational process digitization"
-      ],
-      businessBenefits: [
-        "Drastically reduced manual effort and operational friction",
-        "Real-time visibility into operations and equipment",
-        "Superior operational efficiency and error reduction"
-      ],
-      capabilities: ["MQTT", "WebSockets", "AWS IoT Core", "Edge Computing", "Node-RED", "Zapier/n8n"],
-      cta: "Talk to Us About IoT & Automation"
-    },
-    {
-      id: "cybersecurity-qa",
-      number: "07",
-      title: "Cybersecurity & Quality Engineering",
-      shortDesc: "Secure-by-design development practices and rigorous automated QA testing for rock-solid reliability.",
-      whatItIs: "Security-focused development practices and rigorous testing to ensure software is safe, resilient, and reliable.",
-      whatKushaProvides: [
-        "Secure software development lifecycle (SSDLC)",
-        "Software testing & QA (automated & manual)",
-        "Security-focused code review and vulnerability scanning"
-      ],
-      problemsSolved: [
-        "Concerns about system vulnerabilities or customer data exposure",
-        "Lack of confidence in software reliability prior to major releases",
-        "Insufficient automated testing coverage leading to regression bugs"
-      ],
-      typicalUseCases: [
-        "Pre-release full regression and penetration testing cycles",
-        "Automated end-to-end and integration test suite builds",
-        "Security-conscious application architecture and compliance prep"
-      ],
-      businessBenefits: [
-        "Minimized risk of data leaks and security incidents",
-        "Higher confidence in rapid continuous releases",
-        "Significantly fewer production defects and rollbacks"
-      ],
-      capabilities: ["Cypress", "Playwright", "Jest", "OWASP Standards", "SonarQube", "Snyk", "Security Auditing"],
-      cta: "Strengthen Your Software Quality"
-    },
-    {
-      id: "system-integration",
-      number: "08",
-      title: "System Integration & Modernization",
-      shortDesc: "Connecting disparate systems, APIs, and rebuilding legacy architectures that no longer serve you.",
-      whatItIs: "Connecting disparate systems and modernizing legacy applications that hold your business back.",
-      whatKushaProvides: [
-        "Enterprise system integration",
-        "High-performance API development for interoperability",
-        "Legacy system refactoring & modernization",
-        "Cloud-native platform re-architecture"
-      ],
-      problemsSolved: [
-        "Siloed systems that do not communicate or sync data",
-        "Outdated tech stacks that are expensive, brittle, or risky to maintain",
-        "Legacy monolithic platforms preventing team agility"
-      ],
-      typicalUseCases: [
-        "Integrating CRM, ERP, and billing platforms",
-        "Migrating legacy monolithic apps to modular microservices",
-        "Connecting third-party partner services via custom APIs"
-      ],
-      businessBenefits: [
-        "Reduced operational friction between business tools",
-        "Lower long-term maintenance and licensing costs",
-        "A modern foundation for rapid feature development"
-      ],
-      capabilities: ["REST / GraphQL", "gRPC", "Message Queues", "Legacy Strangler Pattern", "API Gateways"],
-      cta: "Discuss Your Modernization Needs"
-    },
-    {
       id: "it-consulting",
-      number: "09",
+      number: "04",
       title: "IT Consulting & Technical Strategy",
       shortDesc: "Independent technical guidance for architecture, tech stack evaluation, and strategic roadmaps.",
       whatItIs: "Independent technical guidance to support architecture, technology, and strategic decisions before capital commitment.",
@@ -338,8 +187,130 @@ export const websiteData = {
       cta: "Book a Technical Consultation"
     },
     {
+      id: "iot-automation",
+      number: "05",
+      title: "IoT & Automation",
+      shortDesc: "Connected devices, telemetry, and workflow automation that eliminate manual operational bottlenecks.",
+      whatItIs: "Connecting physical devices to cloud software systems, and automating repetitive business workflows.",
+      whatKushaProvides: [
+        "IoT application & telemetry development",
+        "Device-to-cloud secure integration",
+        "End-to-end business process automation"
+      ],
+      problemsSolved: [
+        "Manual, repetitive operational tasks draining team hours",
+        "Lack of real-time visibility into physical assets or hardware",
+        "Disconnected hardware and legacy software systems"
+      ],
+      typicalUseCases: [
+        "Remote equipment and sensor monitoring",
+        "Connected smart hardware product features",
+        "Multi-step approval and operational workflow automation",
+        "Operational process digitization"
+      ],
+      businessBenefits: [
+        "Drastically reduced manual effort and operational friction",
+        "Real-time visibility into operations and equipment",
+        "Superior operational efficiency and error reduction"
+      ],
+      capabilities: ["MQTT", "WebSockets", "AWS IoT Core", "Edge Computing", "Node-RED", "Zapier/n8n"],
+      cta: "Talk to Us About IoT & Automation"
+    },
+    {
+      id: "web-mobile",
+      number: "06",
+      title: "Web & Mobile Development",
+      shortDesc: "Responsive web platforms and native or cross-platform mobile apps for iOS and Android.",
+      whatItIs: "Development of modern web applications, high-performance websites, and native or cross-platform mobile apps.",
+      whatKushaProvides: [
+        "Web application development (SPAs & SSR)",
+        "Responsive web platforms",
+        "Native iOS and Android app development",
+        "Cross-platform mobile apps (React Native / Flutter)"
+      ],
+      problemsSolved: [
+        "Need a customer-facing presence that performs well and scales under load",
+        "Need one unified codebase that works seamlessly across iOS and Android",
+        "Existing web/mobile products are slow, outdated, or hard to maintain"
+      ],
+      typicalUseCases: [
+        "Customer self-service portals",
+        "E-commerce & marketplace platforms",
+        "Booking and reservation systems",
+        "Consumer and enterprise mobile apps"
+      ],
+      businessBenefits: [
+        "Consistent user experience across all devices",
+        "Faster development cycles through smart code reuse",
+        "Platforms built to scale with exponential user growth"
+      ],
+      capabilities: ["React", "Next.js", "Vue", "React Native", "Flutter", "Swift", "Kotlin"],
+      cta: "Talk to Us About Your Web or App Project"
+    },
+    {
+      id: "system-integration",
+      number: "07",
+      title: "System Integration & Modernization",
+      shortDesc: "Connecting disparate systems, APIs, and rebuilding legacy architectures that no longer serve you.",
+      whatItIs: "Connecting disparate systems and modernizing legacy applications that hold your business back.",
+      whatKushaProvides: [
+        "Enterprise system integration",
+        "High-performance API development for interoperability",
+        "Legacy system refactoring & modernization",
+        "Cloud-native platform re-architecture"
+      ],
+      problemsSolved: [
+        "Siloed systems that do not communicate or sync data",
+        "Outdated tech stacks that are expensive, brittle, or risky to maintain",
+        "Legacy monolithic platforms preventing team agility"
+      ],
+      typicalUseCases: [
+        "Integrating CRM, ERP, and billing platforms",
+        "Migrating legacy monolithic apps to modular microservices",
+        "Connecting third-party partner services via custom APIs"
+      ],
+      businessBenefits: [
+        "Reduced operational friction between business tools",
+        "Lower long-term maintenance and licensing costs",
+        "A modern foundation for rapid feature development"
+      ],
+      capabilities: ["REST / GraphQL", "gRPC", "Message Queues", "Legacy Strangler Pattern", "API Gateways"],
+      cta: "Discuss Your Modernization Needs"
+    },
+    {
+      id: "cloud-devops",
+      number: "08",
+      title: "Cloud & DevOps",
+      shortDesc: "Cloud architecture, migration, and CI/CD automation pipelines that scale with you.",
+      whatItIs: "Cloud architecture, migration, and automation pipelines that support fast, reliable software delivery.",
+      whatKushaProvides: [
+        "Cloud solution design & multi-cloud architecture",
+        "Zero-downtime cloud migration",
+        "Infrastructure setup & orchestration",
+        "CI/CD automated pipeline implementation",
+        "DevOps process design & observability"
+      ],
+      problemsSolved: [
+        "On-premise infrastructure is costly or difficult to scale",
+        "Deployments are slow, manual, or prone to downtime",
+        "Systems need superior reliability, failover, and observability"
+      ],
+      typicalUseCases: [
+        "Migrating legacy applications to AWS / GCP / Azure",
+        "Setting up auto-scaling infrastructure for growing products",
+        "Automating build, test, and deploy pipelines"
+      ],
+      businessBenefits: [
+        "Lower infrastructure overhead and server costs",
+        "Faster and safer release cadence",
+        "Improved system uptime, resilience, and scalability"
+      ],
+      capabilities: ["AWS", "Google Cloud", "Azure", "Docker", "Kubernetes", "Terraform", "GitHub Actions"],
+      cta: "Plan Your Cloud Strategy"
+    },
+    {
       id: "dedicated-teams",
-      number: "10",
+      number: "09",
       title: "Dedicated Development Teams",
       shortDesc: "Vetted senior engineers and complete cross-functional pods working as an extension of your team.",
       whatItIs: "Access to dedicated developers or full cross-functional development teams who integrate seamlessly into your workflow.",
@@ -487,8 +458,8 @@ export const websiteData = {
     },
     {
       category: "Databases",
-      desc: "Relational and NoSQL schemas suited to application performance, consistency, and analytical needs.",
-      stack: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "DynamoDB", "Elasticsearch", "Supabase"]
+      desc: "Relational, NoSQL, and vector schemas suited to high performance, data consistency, and modern enterprise scale.",
+      stack: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "DynamoDB", "Elasticsearch", "Supabase", "ClickHouse", "Cassandra", "CockroachDB", "Neo4j", "Pinecone"]
     },
     {
       category: "Cloud",
@@ -519,11 +490,6 @@ export const websiteData = {
       category: "Testing & QA",
       desc: "Automated test suites and manual validation frameworks ensuring zero regressions.",
       stack: ["Playwright", "Cypress", "Jest", "Selenium", "Postman", "k6 Performance", "Appium"]
-    },
-    {
-      category: "Cybersecurity",
-      desc: "Secure coding practices, encryption, access control design, and vulnerability auditing.",
-      stack: ["OWASP Security", "OAuth 2.0 / OIDC", "SonarQube", "Snyk", "SSL/TLS Hardening", "Penetration Testing"]
     }
   ],
 
@@ -761,11 +727,11 @@ export const websiteData = {
 
   faqs: [
     {
-      q: "What services does Kusha provide?",
-      a: "Kusha provides end-to-end technology services, including custom software development, web and mobile app development, cloud and DevOps, data engineering and analytics, AI and machine learning, IoT and automation, cybersecurity, quality engineering, system integration, legacy modernization, IT consulting, and dedicated development teams."
+      q: "What services does Kusha.io provide?",
+      a: "Kusha.io provides end-to-end technology services, including custom software and product engineering, data engineering and analytics, AI and machine learning, IT consulting and technical strategy, IoT and automation, web and mobile app development, system integration and modernization, cloud and DevOps, and dedicated development teams."
     },
     {
-      q: "Where is Kusha based?",
+      q: "Where is Kusha.io based?",
       a: "Kusha.io is registered as a business entity in the Netherlands under KVK No. 98986708, providing our global clients with a reliable European legal structure, contract governance, and business accountability."
     },
     {
@@ -773,8 +739,8 @@ export const websiteData = {
       a: "Our engineering team is based in India, working as a fully integrated extension of our clients' teams, providing strong engineering depth at sustainable cost with complete timezone overlap."
     },
     {
-      q: "Can Kusha work with international clients?",
-      a: "Yes. Kusha is built specifically to serve international clients, with active focus on the Netherlands, Europe, the UK, the USA, Australia, Singapore, Canada, and the Middle East."
+      q: "Can Kusha.io work with international clients?",
+      a: "Yes. Kusha.io is built specifically to serve international clients, with active focus on Europe, the USA, the Middle East, and India."
     },
     {
       q: "What types of projects do you undertake?",

@@ -20,7 +20,7 @@ export function FloatingDock({ activeSection, onOpenSearch, onOpenNotifications,
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 500);
 
-      const sections = ['services', 'global-model', 'industries', 'tech-stack', 'how-we-work', 'engagement', 'insights', 'faq', 'contact'];
+      const sections = ['global-model', 'services', 'industries', 'tech-stack', 'how-we-work', 'engagement', 'faq', 'contact'];
       const scrollPos = window.scrollY + 200;
 
       for (const sec of sections) {
@@ -68,14 +68,6 @@ export function FloatingDock({ activeSection, onOpenSearch, onOpenNotifications,
         </button>
 
         <button
-          className={`dock-item ${currentSection === 'services' ? 'active' : ''}`}
-          onClick={() => scrollToSection('services')}
-        >
-          <Layers size={15} />
-          <span>Services</span>
-        </button>
-
-        <button
           className={`dock-item ${currentSection === 'global-model' ? 'active' : ''}`}
           onClick={() => scrollToSection('global-model')}
         >
@@ -84,19 +76,19 @@ export function FloatingDock({ activeSection, onOpenSearch, onOpenNotifications,
         </button>
 
         <button
+          className={`dock-item ${currentSection === 'services' ? 'active' : ''}`}
+          onClick={() => scrollToSection('services')}
+        >
+          <Layers size={15} />
+          <span>Services</span>
+        </button>
+
+        <button
           className={`dock-item ${currentSection === 'how-we-work' ? 'active' : ''}`}
           onClick={() => scrollToSection('how-we-work')}
         >
           <GitMerge size={15} />
           <span>Process</span>
-        </button>
-
-        <button
-          className={`dock-item ${currentSection === 'insights' ? 'active' : ''}`}
-          onClick={() => scrollToSection('insights')}
-        >
-          <BookOpen size={15} />
-          <span>Insights</span>
         </button>
 
         <button

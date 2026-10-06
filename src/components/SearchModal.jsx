@@ -204,7 +204,7 @@ export function SearchModal({ isOpen, onClose, onSelectService, onOpenContact })
         {/* Footer shortcuts */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '16px', borderTop: '1px solid var(--border-subtle)', marginTop: '16px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
           <span>Navigation: <kbd style={{ background: 'rgba(255,255,255,0.1)', padding: '2px 6px', borderRadius: '4px' }}>ESC</kbd> to exit</span>
-          <span style={{ color: 'var(--lime-primary)' }}>Kusha Global Engine</span>
+          <span style={{ color: 'var(--lime-primary)' }}>Kusha.io Global Engine</span>
         </div>
       </div>
     </div>

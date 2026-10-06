@@ -2,17 +2,14 @@ import React from 'react';
 import { 
   ShieldCheck, 
   Lock, 
-  FileCode, 
+  Globe2, 
   Award, 
   Layers, 
-  Globe2, 
   HeartHandshake, 
   Sliders, 
   TrendingUp, 
   MessageSquare, 
-  Zap,
-  ArrowUpRight,
-  Sparkles
+  Zap
 } from 'lucide-react';
 import { websiteData } from '../data/websiteContent';
 
@@ -33,7 +30,7 @@ export function TrustAndCaseStudyBlueprint({ onOpenContact }) {
       <div className="container">
         
         {/* ==========================================================================
-            WHY KUSHA & TRUST SECTION
+            WHY KUSHA.IO & TRUST SECTION
            ========================================================================== */}
         <div className="section-header">
           <div className="section-badge lime">
@@ -63,7 +60,7 @@ export function TrustAndCaseStudyBlueprint({ onOpenContact }) {
             </div>
             <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#ffffff', marginBottom: '6px' }}>Registered Legal Entity</h4>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-              Kusha.io is officially registered in the Netherlands under KVK No. 98986708.
+              Kusha.io is officially registered as an accountable European business entity in the Netherlands.
             </p>
           </div>
 
@@ -98,10 +95,10 @@ export function TrustAndCaseStudyBlueprint({ onOpenContact }) {
           </div>
         </div>
 
-        {/* 8 Core Why Kusha Bento Grid */}
-        <div style={{ marginBottom: '80px' }}>
+        {/* 8 Core Why Kusha.io Bento Grid */}
+        <div>
           <div style={{ marginBottom: '24px' }}>
-            <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>Why Ambitious Leaders Choose Kusha</h3>
+            <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff' }}>Why Ambitious Leaders Choose Kusha.io</h3>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '18px' }}>
@@ -126,89 +123,8 @@ export function TrustAndCaseStudyBlueprint({ onOpenContact }) {
           </div>
         </div>
 
-        {/* ==========================================================================
-            PORTFOLIO & CASE STUDY BLUEPRINTS (SECTION 9 AS PER STRATEGY DOCUMENT)
-           ========================================================================== */}
-        <div className="section-header">
-          <div className="section-badge lavender">
-            <FileCode size={14} />
-            <span>Case Study & Architecture Blueprints</span>
-          </div>
-          <h2 className="section-title">
-            Engineering Rigor: <span className="text-gradient-lavender">How We Solve Complex Problems</span>
-          </h2>
-          <p className="section-subtitle">
-            We follow a standardized, measurable engineering blueprint across every engagement: Business Context → Technical Challenge → Solution Architecture → Measurable Impact.
-          </p>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '20px' }}>
-          {websiteData.caseStudyBlueprints.map((cs, i) => (
-            <div 
-              key={i} 
-              className="bento-card" 
-              style={{ 
-                background: 'linear-gradient(145deg, #181920 0%, #131418 100%)',
-                border: '1px solid rgba(139, 123, 247, 0.2)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-              }}
-            >
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--lavender-light)', textTransform: 'uppercase' }}>
-                    BLUEPRINT 0{i + 1}
-                  </span>
-                  <span style={{ background: 'rgba(255, 255, 255, 0.05)', fontSize: '0.72rem', color: 'var(--text-muted)', padding: '2px 8px', borderRadius: 'var(--radius-full)' }}>
-                    NDA Standard
-                  </span>
-                </div>
-
-                <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#ffffff', marginBottom: '14px' }}>
-                  {cs.domain}
-                </h3>
-
-                <div style={{ background: 'var(--bg-subtle)', padding: '12px 16px', borderRadius: 'var(--radius-md)', marginBottom: '12px', border: '1px solid var(--border-subtle)' }}>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 700 }}>THE CHALLENGE:</div>
-                  <div style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginTop: '2px' }}>{cs.challenge}</div>
-                </div>
-
-                <div style={{ background: 'var(--bg-subtle)', padding: '12px 16px', borderRadius: 'var(--radius-md)', marginBottom: '12px', border: '1px solid var(--border-subtle)' }}>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--lavender-light)', fontWeight: 700 }}>ENGINEERING SOLUTION:</div>
-                  <div style={{ fontSize: '0.88rem', color: '#ffffff', marginTop: '2px' }}>{cs.solution}</div>
-                </div>
-
-                <div style={{ background: 'rgba(212, 255, 79, 0.06)', padding: '12px 16px', borderRadius: 'var(--radius-md)', marginBottom: '16px', border: '1px solid var(--lime-border)' }}>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--lime-primary)', fontWeight: 700 }}>OUTCOMES & IMPACT:</div>
-                  <div style={{ fontSize: '0.88rem', color: '#ffffff', fontWeight: 600, marginTop: '2px' }}>{cs.outcomes}</div>
-                </div>
-              </div>
-
-              <div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '16px' }}>
-                  {cs.stack.map(st => (
-                    <span key={st} style={{ fontSize: '0.72rem', background: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-secondary)', padding: '2px 8px', borderRadius: '4px' }}>
-                      {st}
-                    </span>
-                  ))}
-                </div>
-
-                <button 
-                  className="btn btn-secondary btn-sm"
-                  style={{ width: '100%' }}
-                  onClick={() => onOpenContact('project', `Architecture Blueprint: ${cs.domain}`)}
-                >
-                  <span>Build Similar Solution</span>
-                  <ArrowUpRight size={14} />
-                </button>
-              </div>
-
-            </div>
-          ))}
-        </div>
-
       </div>
     </section>
   );
 }
+export default TrustAndCaseStudyBlueprint;

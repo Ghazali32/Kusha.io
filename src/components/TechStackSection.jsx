@@ -29,8 +29,7 @@ export function TechStackSection({ onOpenContact }) {
     "Data Engineering": Workflow,
     "AI & Machine Learning": BrainCircuit,
     "IoT & Embedded": Radio,
-    "Testing & QA": CheckCircle2,
-    Cybersecurity: Shield
+    "Testing & QA": CheckCircle2
   };
 
   return (

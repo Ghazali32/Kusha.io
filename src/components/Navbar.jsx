@@ -14,13 +14,12 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
   }, []);
 
   const navLinks = [
-    { label: 'Services', href: '#services' },
     { label: 'Global Model', href: '#global-model' },
+    { label: 'Services', href: '#services' },
     { label: 'Industries', href: '#industries' },
     { label: 'Tech Stack', href: '#tech-stack' },
     { label: 'How We Work', href: '#how-we-work' },
     { label: 'Engagement', href: '#engagement' },
-    { label: 'Insights', href: '#insights' },
     { label: 'FAQ', href: '#faq' },
   ];
 
@@ -69,7 +68,7 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
               Kusha<span style={{ color: 'var(--lime-primary)' }}>.io</span>
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '-2px' }}>
-              <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 600 }}>NL • KVK 98986708</span>
+              <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 600 }}>Netherlands • India</span>
             </div>
           </div>
         </a>
