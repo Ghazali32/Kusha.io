@@ -216,7 +216,13 @@ export function ContactForm({
         </span>
 
         <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#ffffff', marginTop: '6px', marginBottom: '12px' }}>
-          {submissionResult.message || 'Submission Received!'}
+          {(submissionResult.message || '')
+            .replace(/your start your project request/i, 'your project request')
+            .replace(/your book free consultation request/i, 'your consultation request')
+            || (isProject 
+              ? 'Thank you! Your project request has been received.' 
+              : 'Thank you! Your consultation request has been received.')
+          }
         </h3>
 
         <p style={{ fontSize: '0.96rem', color: 'var(--text-secondary)', maxWidth: '500px', margin: '0 auto 24px auto', lineHeight: 1.6 }}>
