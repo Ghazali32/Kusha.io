@@ -1,55 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
-  Send, 
-  CheckCircle2, 
-  Mail, 
   Building, 
-  ShieldCheck, 
-  ArrowUpRight, 
+  Mail, 
+  CheckCircle2, 
   Sparkles, 
   X,
-  FileCheck,
-  Globe2,
-  Clock
+  ShieldCheck,
+  Globe2
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
-import { websiteData } from '../data/websiteContent';
+import { ContactForm } from './ContactForm';
 
 export function ContactModalAndSection({ isOpen, onClose, initialType = 'project', initialSubject = '' }) {
-  const [activeTab, setActiveTab] = useState(initialType);
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    company: '',
-    country: '',
-    service: initialSubject || 'Software Development',
-    budget: '$10k - $25k',
-    timeline: '1-3 months',
-    message: '',
-    referral: '',
-    ndaRequested: true
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    try {
-      confetti({
-        particleCount: 90,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-    } catch (err) {
-      // ignore
-    }
-  };
-
-  const handleReset = () => {
-    setSubmitted(false);
-    if (onClose) onClose();
-  };
-
   return (
     <>
       {/* ==========================================================================
@@ -99,15 +60,15 @@ export function ContactModalAndSection({ isOpen, onClose, initialType = 'project
                   Direct Collaboration
                 </span>
                 <h3 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#ffffff', marginTop: '6px', marginBottom: '18px' }}>
-                  Start Your Project
+                  Start Your Project or Consultation
                 </h3>
 
                 <p style={{ fontSize: '0.94rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '24px' }}>
-                  Tell us about your requirements and we'll get back to you within 24 business hours with an initial architecture overview and discovery plan.
+                  Tell us about your requirements or schedule a discovery session. We'll get back to you within 24 business hours with an initial architecture overview and discovery plan.
                 </p>
 
                 <h4 style={{ fontSize: '0.88rem', fontWeight: 700, color: '#ffffff', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                  Reasons to Contact Kusha.io:
+                  Reasons to Partner With Kusha.io:
                 </h4>
 
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px' }}>
@@ -152,187 +113,11 @@ export function ContactModalAndSection({ isOpen, onClose, initialType = 'project
                 border: '1px solid var(--border-medium)'
               }}
             >
-              {submitted ? (
-                <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-                  <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--lime-subtle)', border: '2px solid var(--lime-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
-                    <CheckCircle2 size={36} color="var(--lime-primary)" />
-                  </div>
-                  <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', marginBottom: '10px' }}>
-                    Message Received!
-                  </h3>
-                  <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', maxWidth: '480px', margin: '0 auto 24px auto', lineHeight: 1.6 }}>
-                    Thank you for reaching out, <strong>{formData.fullName}</strong>. Our European solutions desk and lead architects will review your requirements and reply to <strong>{formData.email}</strong> within 24 hours.
-                  </p>
-                  <div style={{ background: 'var(--bg-subtle)', padding: '16px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)', display: 'inline-block', marginBottom: '24px' }}>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--lime-primary)', fontWeight: 700 }}>
-                      NDA Requested: {formData.ndaRequested ? 'Yes (Draft will be attached)' : 'Standard Confidentiality'}
-                    </span>
-                  </div>
-                  <div>
-                    <button className="btn btn-secondary" onClick={() => setSubmitted(false)}>
-                      Submit Another Enquiry
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '10px' }}>
-                    <div className="pill-switch">
-                      <button
-                        type="button"
-                        className={`pill-switch-item ${activeTab === 'project' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('project')}
-                      >
-                        Start Your Project
-                      </button>
-                      <button
-                        type="button"
-                        className={`pill-switch-item ${activeTab === 'consultation' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('consultation')}
-                      >
-                        Book Free Consultation
-                      </button>
-                    </div>
-
-                    <span style={{ fontSize: '0.78rem', color: 'var(--lime-primary)', fontWeight: 600 }}>
-                      ✓ 24h Response SLA
-                    </span>
-                  </div>
-
-                  {/* Name & Email */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginBottom: '16px' }} className="contact-subgrid">
-                    <div>
-                      <label className="form-label">Full Name *</label>
-                      <input 
-                        type="text" 
-                        required 
-                        className="form-input" 
-                        placeholder="e.g. Alex Morgan"
-                        value={formData.fullName}
-                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <label className="form-label">Business Email *</label>
-                      <input 
-                        type="email" 
-                        required 
-                        className="form-input" 
-                        placeholder="alex@company.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Company & Country */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginBottom: '16px' }} className="contact-subgrid">
-                    <div>
-                      <label className="form-label">Company Name</label>
-                      <input 
-                        type="text" 
-                        className="form-input" 
-                        placeholder="Acme Corp"
-                        value={formData.company}
-                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <label className="form-label">Country / Location *</label>
-                      <input 
-                        type="text" 
-                        required 
-                        className="form-input" 
-                        placeholder="e.g. Netherlands, UK, USA"
-                        value={formData.country}
-                        onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Service & Budget */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginBottom: '16px' }} className="contact-subgrid">
-                    <div>
-                      <label className="form-label">Service of Interest</label>
-                      <select 
-                        className="form-select"
-                        value={formData.service}
-                        onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                      >
-                        <option value="Software Development">Software & Product Engineering</option>
-                        <option value="Web & Mobile Development">Web & Mobile Development</option>
-                        <option value="Cloud & DevOps">Cloud & DevOps</option>
-                        <option value="Data & Analytics">Data Engineering & Analytics</option>
-                        <option value="AI & Machine Learning">AI & Machine Learning</option>
-                        <option value="IoT & Automation">IoT & Automation</option>
-                        <option value="Cybersecurity & QA">Cybersecurity & Quality Engineering</option>
-                        <option value="System Integration">System Integration & Modernization</option>
-                        <option value="IT Consulting">IT Consulting & Strategy</option>
-                        <option value="Dedicated Team">Dedicated Development Team</option>
-                        <option value="Other">Other / General Technical Inquiry</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="form-label">Project Timeline</label>
-                      <select 
-                        className="form-select"
-                        value={formData.timeline}
-                        onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                      >
-                        <option value="Immediate (< 1 month)">Immediate (&lt; 1 month)</option>
-                        <option value="1-3 months">1 to 3 months</option>
-                        <option value="3-6 months">3 to 6 months</option>
-                        <option value="Flexible / Exploring">Flexible / Exploring</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Message */}
-                  <div className="form-group">
-                    <label className="form-label">Project Details / Message</label>
-                    <textarea 
-                      rows={4}
-                      className="form-textarea"
-                      placeholder="Briefly describe your project, technical goals, or key questions..."
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    />
-                  </div>
-
-                  {/* Checkbox: NDA */}
-                  <div style={{ marginBottom: '24px' }}>
-                    <label className="form-checkbox-label">
-                      <input 
-                        type="checkbox"
-                        className="form-checkbox"
-                        checked={formData.ndaRequested}
-                        onChange={(e) => setFormData({ ...formData, ndaRequested: e.target.checked })}
-                      />
-                      <span>Please execute a mutual NDA prior to detailed technical discovery.</span>
-                    </label>
-                  </div>
-
-                  {/* Submit Button */}
-                  <button 
-                    type="submit" 
-                    className="btn btn-lime btn-lg"
-                    style={{ width: '100%' }}
-                  >
-                    <span>{activeTab === 'project' ? 'Submit Project Scoping Request' : 'Book Free Technical Consultation'}</span>
-                    <Send size={18} />
-                  </button>
-
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', marginTop: '16px', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                    <span>🔒 Confidential & Secure</span>
-                    <span>•</span>
-                    <span>No Obligations</span>
-                    <span>•</span>
-                    <span>Direct: info@kusha.io</span>
-                  </div>
-
-                </form>
-              )}
+              <ContactForm 
+                initialType={initialType} 
+                initialSubject={initialSubject} 
+                isModal={false} 
+              />
             </div>
 
           </div>
@@ -355,7 +140,7 @@ export function ContactModalAndSection({ isOpen, onClose, initialType = 'project
       </section>
 
       {/* ==========================================================================
-          GLOBAL POPUP MODAL (IF TRIGGERED VIA POPUP BUTTONS)
+          GLOBAL POPUP MODAL (TRIGGERED VIA HEADER/HERO/DOCK BUTTONS)
          ========================================================================== */}
       {isOpen && (
         <div className="modal-backdrop" onClick={onClose}>
@@ -373,117 +158,22 @@ export function ContactModalAndSection({ isOpen, onClose, initialType = 'project
                 </div>
               </div>
 
-              <button onClick={onClose} className="dock-icon-btn" style={{ width: '34px', height: '34px' }}>
+              <button 
+                onClick={onClose} 
+                className="dock-icon-btn" 
+                style={{ width: '34px', height: '34px' }}
+                aria-label="Close modal"
+              >
                 <X size={18} />
               </button>
             </div>
 
-            {submitted ? (
-              <div style={{ textAlign: 'center', padding: '30px 10px' }}>
-                <CheckCircle2 size={48} color="var(--lime-primary)" style={{ margin: '0 auto 16px auto' }} />
-                <h4 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#ffffff', marginBottom: '8px' }}>Enquiry Submitted!</h4>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', marginBottom: '20px' }}>
-                  We have received your request and will contact you at <strong>{formData.email}</strong> shortly.
-                </p>
-                <button className="btn btn-lime" onClick={handleReset}>Close Window</button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginBottom: '12px' }}>
-                  <div>
-                    <label className="form-label">Full Name *</label>
-                    <input 
-                      type="text" 
-                      required 
-                      className="form-input" 
-                      placeholder="Alex Morgan"
-                      value={formData.fullName}
-                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    />
-                  </div>
-                  <div>
-                    <label className="form-label">Business Email *</label>
-                    <input 
-                      type="email" 
-                      required 
-                      className="form-input" 
-                      placeholder="alex@company.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    />
-                  </div>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginBottom: '12px' }}>
-                  <div>
-                    <label className="form-label">Company Name</label>
-                    <input 
-                      type="text" 
-                      className="form-input" 
-                      placeholder="Company Ltd"
-                      value={formData.company}
-                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    />
-                  </div>
-                  <div>
-                    <label className="form-label">Country / Location *</label>
-                    <input 
-                      type="text" 
-                      required 
-                      className="form-input" 
-                      placeholder="e.g. Netherlands, UK"
-                      value={formData.country}
-                      onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group" style={{ marginBottom: '12px' }}>
-                  <label className="form-label">Service of Interest</label>
-                  <select 
-                    className="form-select"
-                    value={formData.service}
-                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                  >
-                    <option value="Software Development">Software & Product Engineering</option>
-                    <option value="Web & Mobile Development">Web & Mobile Development</option>
-                    <option value="Cloud & DevOps">Cloud & DevOps</option>
-                    <option value="Data & Analytics">Data Engineering & Analytics</option>
-                    <option value="AI & Machine Learning">AI & Machine Learning</option>
-                    <option value="Dedicated Team">Dedicated Development Team</option>
-                    <option value="Other">Other / General Technical Inquiry</option>
-                  </select>
-                </div>
-
-                <div className="form-group" style={{ marginBottom: '16px' }}>
-                  <label className="form-label">Project Details</label>
-                  <textarea 
-                    rows={3}
-                    className="form-textarea"
-                    placeholder="Briefly describe your requirements..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  />
-                </div>
-
-                <div style={{ marginBottom: '20px' }}>
-                  <label className="form-checkbox-label">
-                    <input 
-                      type="checkbox"
-                      className="form-checkbox"
-                      checked={formData.ndaRequested}
-                      onChange={(e) => setFormData({ ...formData, ndaRequested: e.target.checked })}
-                    />
-                    <span style={{ fontSize: '0.84rem' }}>Request Mutual NDA prior to project discussion.</span>
-                  </label>
-                </div>
-
-                <button type="submit" className="btn btn-lime" style={{ width: '100%' }}>
-                  <span>Submit Request</span>
-                  <Send size={16} />
-                </button>
-              </form>
-            )}
+            <ContactForm 
+              initialType={initialType} 
+              initialSubject={initialSubject} 
+              isModal={true} 
+              onClose={onClose} 
+            />
           </div>
         </div>
       )}

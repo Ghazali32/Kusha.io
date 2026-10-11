@@ -719,9 +719,63 @@ button {
   border-radius: 4px;
 }
 
+.form-input.is-invalid, .form-select.is-invalid, .form-textarea.is-invalid {
+  border-color: var(--red-negative) !important;
+  box-shadow: 0 0 0 3px var(--red-subtle) !important;
+}
+
+.form-field-error {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: var(--red-negative);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.form-banner-alert {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.form-banner-alert.error {
+  background: var(--red-subtle);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  color: #fca5a5;
+}
+
+.form-banner-alert.warning {
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  color: #fde047;
+}
+
+.form-banner-alert.success {
+  background: var(--green-subtle);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  color: #86efac;
+}
+
+.spin-animation {
+  animation: spin 0.85s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* ==========================================================================
    ANIMATIONS & UTILITIES
    ========================================================================== */
+
 
 @keyframes pulseGlow {
   0%, 100% { opacity: 0.4; transform: scale(1); }
