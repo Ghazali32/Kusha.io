@@ -17,6 +17,7 @@ import {
   SERVICE_OF_INTEREST_OPTIONS, 
   mapSubjectToService 
 } from '../services/contactApi';
+import { useNavigate } from 'react-router-dom';
 
 export function ContactForm({ 
   initialType = 'project', 
@@ -24,7 +25,9 @@ export function ContactForm({
   isModal = false,
   onClose = null 
 }) {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(initialType === 'consultation' ? 'consultation' : 'project');
+
   
   const [formData, setFormData] = useState({
     fullName: '',
@@ -138,17 +141,22 @@ export function ContactForm({
     setLoading(false);
 
     if (result.success) {
-      setSubmissionResult(result);
-      try {
-        confetti({
-          particleCount: 80,
-          spread: 65,
-          origin: { y: 0.6 }
-        });
-      } catch (err) {
-        // ignore confetti errors
-      }
+      if (onClose) onClose();
+      navigate('/thankyou', {
+        state: {
+          fullName: formData.fullName,
+          email: formData.email,
+          formType: activeTab,
+          country: formData.country,
+          company: formData.company,
+          service: formData.service,
+          requestNda: formData.requestNda,
+          message: result.message,
+        }
+      });
+      return;
     } else {
+
       if (result.isRateLimited) {
         setIsRateLimited(true);
         setGeneralError(result.message);

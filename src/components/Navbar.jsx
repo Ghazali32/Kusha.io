@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Globe, Shield, Sparkles, Menu, X, MessageSquareCode } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowUpRight, Globe, Shield, Sparkles, Menu, X, ChevronDown, Layers, ArrowRight } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 export function Navbar({ onOpenContact, onOpenSearch }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+  const isWebDev = location.pathname === '/services/website-development';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,14 +20,25 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setServicesDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
+
   const navLinks = [
-    { label: 'Global Model', href: '#global-model' },
-    { label: 'Services', href: '#services' },
-    { label: 'Industries', href: '#industries' },
-    { label: 'Tech Stack', href: '#tech-stack' },
-    { label: 'How We Work', href: '#how-we-work' },
-    { label: 'Engagement', href: '#engagement' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'Global Model', href: isHome ? '#global-model' : '/#global-model' },
+    { label: 'Services', isDropdown: true },
+    { label: 'Industries', href: isHome ? '#industries' : '/#industries' },
+    { label: 'Tech Stack', href: isHome ? '#tech-stack' : '/#tech-stack' },
+    { label: 'How We Work', href: isHome ? '#how-we-work' : '/#how-we-work' },
+    { label: 'Engagement', href: isHome ? '#engagement' : '/#engagement' },
+    { label: 'FAQ', href: isHome ? '#faq' : '/#faq' },
   ];
 
   return (
@@ -32,7 +50,7 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
         right: 0,
         zIndex: 100,
         transition: 'all 0.3s ease',
-        background: isScrolled ? 'rgba(12, 13, 16, 0.88)' : 'transparent',
+        background: isScrolled ? 'rgba(12, 13, 16, 0.92)' : 'transparent',
         backdropFilter: isScrolled ? 'blur(16px)' : 'none',
         WebkitBackdropFilter: isScrolled ? 'blur(16px)' : 'none',
         borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid transparent',
@@ -41,7 +59,7 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Brand Logo */}
-        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
           <div
             style={{
               width: '38px',
@@ -71,7 +89,7 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
               <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 600 }}>Netherlands • India</span>
             </div>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Navigation Links */}
         <nav
@@ -83,33 +101,153 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
             border: '1px solid rgba(255, 255, 255, 0.08)',
             padding: '4px 10px',
             borderRadius: '9999px',
+            position: 'relative'
           }}
           className="desktop-nav"
         >
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              style={{
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                color: 'var(--text-secondary)',
-                padding: '6px 14px',
-                borderRadius: '9999px',
-                transition: 'all 0.18s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = '#ffffff';
-                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--text-secondary)';
-                e.currentTarget.style.background = 'transparent';
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            if (link.isDropdown) {
+              return (
+                <div 
+                  key={link.label}
+                  ref={dropdownRef}
+                  style={{ position: 'relative' }}
+                  onMouseEnter={() => setServicesDropdownOpen(true)}
+                  onMouseLeave={() => setServicesDropdownOpen(false)}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
+                    style={{
+                      fontSize: '0.85rem',
+                      fontWeight: 600,
+                      color: isWebDev ? 'var(--lime-primary)' : 'var(--text-secondary)',
+                      padding: '6px 14px',
+                      borderRadius: '9999px',
+                      transition: 'all 0.18s ease',
+                      background: isWebDev || servicesDropdownOpen ? 'rgba(255, 255, 255, 0.06)' : 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                  >
+                    <span>Services</span>
+                    <ChevronDown size={14} style={{ transform: servicesDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
+                  </button>
+
+                  {/* Services Popover / Dropdown */}
+                  {servicesDropdownOpen && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '100%',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        marginTop: '10px',
+                        width: '340px',
+                        background: '#16171d',
+                        border: '1px solid var(--border-medium)',
+                        borderRadius: 'var(--radius-lg)',
+                        padding: '12px',
+                        boxShadow: '0 16px 40px rgba(0, 0, 0, 0.7)',
+                        zIndex: 200,
+                        animation: 'fadeIn 0.2s ease-out'
+                      }}
+                    >
+                      {/* Featured Highlight Item: Website Development */}
+                      <Link
+                        to="/services/website-development"
+                        onClick={() => setServicesDropdownOpen(false)}
+                        style={{
+                          display: 'block',
+                          padding: '12px 14px',
+                          borderRadius: 'var(--radius-md)',
+                          background: 'linear-gradient(135deg, rgba(212, 255, 79, 0.12) 0%, rgba(139, 123, 247, 0.08) 100%)',
+                          border: '1px solid var(--lime-border)',
+                          textDecoration: 'none',
+                          marginBottom: '8px',
+                          transition: 'all 0.18s ease'
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                          <span style={{ fontSize: '0.88rem', fontWeight: 800, color: '#ffffff', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <Sparkles size={14} color="var(--lime-primary)" />
+                            Website Development
+                          </span>
+                          <span style={{ fontSize: '0.65rem', fontWeight: 800, background: 'var(--lime-primary)', color: '#000', padding: '2px 6px', borderRadius: '4px' }}>
+                            FEATURED
+                          </span>
+                        </div>
+                        <p style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.4 }}>
+                          Responsive, AI Assistant, 2-Way CRM Sync, Stripe Workflows & Messaging
+                        </p>
+                      </Link>
+
+                      {/* General Services Link */}
+                      <a
+                        href={isHome ? '#services' : '/#services'}
+                        onClick={() => setServicesDropdownOpen(false)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '10px 14px',
+                          borderRadius: 'var(--radius-md)',
+                          color: 'var(--text-secondary)',
+                          textDecoration: 'none',
+                          fontSize: '0.82rem',
+                          fontWeight: 600,
+                          transition: 'background 0.18s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                          e.currentTarget.style.color = '#ffffff';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = 'transparent';
+                          e.currentTarget.style.color = 'var(--text-secondary)';
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <Layers size={15} color="var(--lavender-light)" />
+                          <span>All 10 Core Capabilities</span>
+                        </div>
+                        <ArrowRight size={13} />
+                      </a>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                style={{
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  color: 'var(--text-secondary)',
+                  padding: '6px 14px',
+                  borderRadius: '9999px',
+                  transition: 'all 0.18s ease',
+                  textDecoration: 'none'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#ffffff';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'var(--text-secondary)';
+                  e.currentTarget.style.background = 'transparent';
+                }}
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </nav>
 
         {/* Action Buttons */}
@@ -124,7 +262,7 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
           </button>
 
           <button
-            onClick={() => onOpenContact('consultation')}
+            onClick={() => onOpenContact('consultation', 'Web Consultation')}
             className="btn btn-secondary btn-sm"
             style={{ display: 'none' }}
             id="nav-consult-btn"
@@ -133,7 +271,7 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
           </button>
 
           <button
-            onClick={() => onOpenContact('project')}
+            onClick={() => onOpenContact('project', 'Website Development')}
             className="btn btn-lime btn-sm"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
           >
@@ -169,22 +307,75 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
             boxShadow: 'var(--shadow-lg)'
           }}
         >
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              style={{
-                fontSize: '1rem',
-                fontWeight: 600,
-                color: '#ffffff',
-                padding: '10px 0',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            if (link.isDropdown) {
+              return (
+                <div key={link.label} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)', paddingBottom: '10px' }}>
+                  <a
+                    href={isHome ? '#services' : '/#services'}
+                    onClick={() => setMobileMenuOpen(false)}
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      color: '#ffffff',
+                      display: 'block',
+                      padding: '8px 0',
+                      textDecoration: 'none'
+                    }}
+                  >
+                    Services (All 10 Capabilities)
+                  </a>
+
+                  {/* Highlighted Web Development Link in Mobile Menu */}
+                  <Link
+                    to="/services/website-development"
+                    onClick={() => setMobileMenuOpen(false)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      background: 'rgba(212, 255, 79, 0.1)',
+                      border: '1px solid var(--lime-border)',
+                      padding: '10px 14px',
+                      borderRadius: 'var(--radius-md)',
+                      color: 'var(--lime-primary)',
+                      fontSize: '0.9rem',
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                      marginTop: '6px'
+                    }}
+                  >
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Sparkles size={15} />
+                      Website Development (AI & CRM)
+                    </span>
+                    <span style={{ fontSize: '0.65rem', background: 'var(--lime-primary)', color: '#000', padding: '2px 6px', borderRadius: '4px', fontWeight: 800 }}>
+                      FEATURED
+                    </span>
+                  </Link>
+                </div>
+              );
+            }
+
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                style={{
+                  fontSize: '1rem',
+                  fontWeight: 600,
+                  color: '#ffffff',
+                  padding: '10px 0',
+                  borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                  textDecoration: 'none'
+                }}
+              >
+                {link.label}
+              </a>
+            );
+          })}
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
             <button
               onClick={() => { setMobileMenuOpen(false); onOpenContact('consultation'); }}

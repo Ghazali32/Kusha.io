@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, ArrowRight, Layers, Globe2, Cpu, HelpCircle, BookOpen } from 'lucide-react';
+import { Search, X, ArrowRight, Layers, Globe2, Cpu, HelpCircle, BookOpen, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { websiteData } from '../data/websiteContent';
 
 export function SearchModal({ isOpen, onClose, onSelectService, onOpenContact }) {
   const [query, setQuery] = useState('');
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -88,6 +91,41 @@ export function SearchModal({ isOpen, onClose, onSelectService, onOpenContact })
         {/* Search Results list */}
         <div style={{ maxHeight: '420px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
           
+          {/* Featured Route: Website Development Landing */}
+          {(query.length === 0 || 'website development ai crm booking payment messaging responsive'.includes(query.toLowerCase())) && (
+            <div>
+              <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--lime-primary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Sparkles size={12} />
+                <span>Featured Landing Page</span>
+              </div>
+              <div
+                onClick={() => {
+                  onClose();
+                  navigate('/services/website-development');
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '12px 14px',
+                  borderRadius: 'var(--radius-sm)',
+                  background: 'linear-gradient(90deg, rgba(212, 255, 79, 0.12) 0%, rgba(139, 123, 247, 0.08) 100%)',
+                  border: '1px solid var(--lime-border)',
+                  cursor: 'pointer'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <Layers size={18} color="var(--lime-primary)" />
+                  <div>
+                    <div style={{ fontSize: '0.92rem', fontWeight: 800, color: '#ffffff' }}>Website Development Platform</div>
+                    <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)' }}>Responsive Design, AI, CRM Sync, Stripe Workflows & Messaging</div>
+                  </div>
+                </div>
+                <ArrowRight size={15} color="var(--lime-primary)" />
+              </div>
+            </div>
+          )}
+
           {query.length > 0 && !hasResults && (
             <div style={{ textAlign: 'center', padding: '30px', color: 'var(--text-muted)' }}>
               No matches found for "{query}".
@@ -100,6 +138,7 @@ export function SearchModal({ isOpen, onClose, onSelectService, onOpenContact })
               <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--lime-primary)', marginBottom: '8px' }}>
                 Services ({services.length})
               </div>
+
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {services.slice(0, 4).map((s) => (
                   <div

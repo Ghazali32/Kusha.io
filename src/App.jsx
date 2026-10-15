@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
-import { HeroBento } from './components/HeroBento';
-import { GlobalDeliverySection } from './components/GlobalDeliverySection';
-import { ServicesSection } from './components/ServicesSection';
-import { InteractiveEstimator } from './components/InteractiveEstimator';
-import { IndustriesSection } from './components/IndustriesSection';
-import { TechStackSection } from './components/TechStackSection';
-import { ProcessSection } from './components/ProcessSection';
-import { EngagementModelsSection } from './components/EngagementModelsSection';
-import { TrustAndCaseStudyBlueprint } from './components/TrustAndCaseStudyBlueprint';
-import { FaqSection } from './components/FaqSection';
-import { ContactModalAndSection } from './components/ContactModalAndSection';
+import { HomePage } from './pages/HomePage';
+import { WebsiteDevelopmentPage } from './pages/WebsiteDevelopmentPage';
+import { ThankYouPage } from './pages/ThankYouPage';
 import { Footer } from './components/Footer';
+
 import { FloatingDock } from './components/FloatingDock';
 import { SearchModal } from './components/SearchModal';
 import { NotificationDrawer } from './components/NotificationDrawer';
+import { ContactModalAndSection } from './components/ContactModalAndSection';
+
+// Helper component to scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname]);
+
+  return null;
+}
 
 export function App() {
   const [contactModalOpen, setContactModalOpen] = useState(false);
@@ -38,65 +44,51 @@ export function App() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-app)', color: 'var(--text-primary)', position: 'relative' }}>
-      
+      <ScrollToTop />
+
       {/* Top Navbar */}
       <Navbar 
         onOpenContact={handleOpenContact} 
         onOpenSearch={() => setSearchModalOpen(true)} 
       />
 
-      {/* Hero Section with Interactive Bento Dashboard */}
-      <HeroBento 
-        onOpenContact={handleOpenContact}
-        onOpenScoper={handleOpenScoper}
-      />
+      {/* Main Page Routing */}
+      <main>
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <HomePage 
+                onOpenContact={handleOpenContact}
+                onOpenScoper={handleOpenScoper}
+                contactModalOpen={contactModalOpen}
+                setContactModalOpen={setContactModalOpen}
+                contactType={contactType}
+                contactSubject={contactSubject}
+              />
+            } 
+          />
+          <Route 
+            path="/services/website-development" 
+            element={
+              <WebsiteDevelopmentPage 
+                onOpenContact={handleOpenContact} 
+              />
+            } 
+          />
+          <Route 
+            path="/thankyou" 
+            element={
+              <ThankYouPage />
+            } 
+          />
+          {/* Catch-all route: redirects to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
 
-      {/* Global Delivery Model: Netherlands Entity + India Engineering */}
-      <GlobalDeliverySection 
-        onOpenContact={handleOpenContact} 
-      />
+        </Routes>
+      </main>
 
-      {/* Core 10 Services */}
-      <ServicesSection 
-        onOpenContact={handleOpenContact} 
-      />
-
-      {/* Interactive Project Estimator & Scope Configurator */}
-      <InteractiveEstimator 
-        onOpenContact={handleOpenContact} 
-      />
-
-      {/* 14+ Target Industries */}
-      <IndustriesSection 
-        onOpenContact={handleOpenContact} 
-      />
-
-      {/* 11 Tech Stack Disciplines */}
-      <TechStackSection 
-        onOpenContact={handleOpenContact} 
-      />
-
-      {/* 9-Step Delivery Process */}
-      <ProcessSection 
-        onOpenContact={handleOpenContact} 
-      />
-
-      {/* 6 Flexible Engagement Models */}
-      <EngagementModelsSection 
-        onOpenContact={handleOpenContact} 
-      />
-
-      {/* Why Kusha.io & Trust Badges */}
-      <TrustAndCaseStudyBlueprint 
-        onOpenContact={handleOpenContact} 
-      />
-
-      {/* Frequently Asked Questions */}
-      <FaqSection 
-        onOpenContact={handleOpenContact} 
-      />
-
-      {/* Comprehensive In-Page Contact & Project Scoping Form */}
+      {/* Global Contact Modal (Triggered via Buttons / Navbar) */}
       <ContactModalAndSection 
         isOpen={contactModalOpen}
         onClose={() => setContactModalOpen(false)}
@@ -104,7 +96,7 @@ export function App() {
         initialSubject={contactSubject}
       />
 
-      {/* Footer with KVK 98986708, GDPR, Legal, and Target Markets */}
+      {/* Global Footer with KVK 98986708, GDPR, Legal, and Target Markets */}
       <Footer 
         onOpenContact={handleOpenContact} 
       />
@@ -133,4 +125,5 @@ export function App() {
     </div>
   );
 }
+
 export default App;

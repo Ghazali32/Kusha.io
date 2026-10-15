@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ShieldCheck, Mail, Globe2, Building2, ArrowUpRight, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { websiteData } from '../data/websiteContent';
+
 
 export function Footer({ onOpenContact }) {
   const [legalModalContent, setLegalModalContent] = useState(null);
@@ -93,7 +95,16 @@ export function Footer({ onOpenContact }) {
               Core Services
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.88rem' }}>
-              {websiteData.services.slice(0, 6).map((s) => (
+              <li>
+                <Link 
+                  to="/services/website-development" 
+                  style={{ color: 'var(--lime-primary)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}
+                >
+                  <span>Website Development (AI & CRM)</span>
+                  <ArrowUpRight size={13} />
+                </Link>
+              </li>
+              {websiteData.services.slice(0, 5).map((s) => (
                 <li key={s.id}>
                   <a href="#services" style={{ color: 'var(--text-secondary)', transition: 'color 0.18s ease' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}>
                     {s.title}
@@ -106,6 +117,7 @@ export function Footer({ onOpenContact }) {
                 </a>
               </li>
             </ul>
+
           </div>
 
           {/* Col 3: Delivery & Engagement (3 cols) */}

@@ -17,7 +17,9 @@ import {
   Sparkles,
   HelpCircle
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { websiteData } from '../data/websiteContent';
+
 
 export function ServicesSection({ onOpenContact }) {
   const [selectedService, setSelectedService] = useState(null);
@@ -180,6 +182,31 @@ export function ServicesSection({ onOpenContact }) {
                     )}
                   </div>
 
+                  {srv.id === 'web-mobile' && (
+                    <div style={{ marginBottom: '12px' }}>
+                      <Link 
+                        to="/services/website-development"
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          background: 'var(--lime-subtle)',
+                          border: '1px solid var(--lime-border)',
+                          color: 'var(--lime-primary)',
+                          fontSize: '0.76rem',
+                          fontWeight: 700,
+                          padding: '4px 10px',
+                          borderRadius: '9999px',
+                          textDecoration: 'none'
+                        }}
+                      >
+                        <Sparkles size={12} />
+                        <span>Web Dev Landing Page (AI & CRM) →</span>
+                      </Link>
+                    </div>
+                  )}
+
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '14px', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
                     <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--lime-primary)' }}>
                       View Service Specs
@@ -191,6 +218,7 @@ export function ServicesSection({ onOpenContact }) {
                 </div>
               </div>
             );
+
           })}
         </div>
 
@@ -306,18 +334,33 @@ export function ServicesSection({ onOpenContact }) {
                   ))}
                 </div>
 
-                <button 
-                  className="btn btn-lime"
-                  onClick={() => {
-                    const serviceName = selectedService.title;
-                    setSelectedService(null);
-                    onOpenContact('project', serviceName);
-                  }}
-                >
-                  <span>{selectedService.cta}</span>
-                  <ArrowUpRight size={16} />
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  {selectedService.id === 'web-mobile' && (
+                    <Link
+                      to="/services/website-development"
+                      className="btn btn-secondary"
+                      style={{ textDecoration: 'none' }}
+                      onClick={() => setSelectedService(null)}
+                    >
+                      <Sparkles size={16} color="var(--lime-primary)" />
+                      <span>Dedicated Web Landing Page</span>
+                    </Link>
+                  )}
+
+                  <button 
+                    className="btn btn-lime"
+                    onClick={() => {
+                      const serviceName = selectedService.title;
+                      setSelectedService(null);
+                      onOpenContact('project', serviceName);
+                    }}
+                  >
+                    <span>{selectedService.cta}</span>
+                    <ArrowUpRight size={16} />
+                  </button>
+                </div>
               </div>
+
 
             </div>
           </div>
