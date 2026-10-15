@@ -160,11 +160,20 @@ export async function submitContactForm({
 
     // Success: 201 Created or 200 OK
     if (response.status === 201 || (response.ok && resJson?.success !== false)) {
+      let message = resJson?.message;
+      if (message && typeof message === 'string') {
+        message = message
+          .replace(/your start your project request/i, 'your project request')
+          .replace(/your book free consultation request/i, 'your consultation request');
+      } else {
+        message = form_type 
+          ? 'Thank you! Your project request has been received.' 
+          : 'Thank you! Your consultation request has been received.';
+      }
+
       return {
         success: true,
-        message: resJson?.message || (form_type 
-          ? 'Thank you! Your project request has been received.' 
-          : 'Thank you! Your consultation request has been received.'),
+        message,
         email_sent: resJson?.email_sent ?? true,
         data: resJson?.data || null,
       };
