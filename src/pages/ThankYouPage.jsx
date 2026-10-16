@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { 
-  CheckCircle2, 
-  ArrowLeft, 
-  Sparkles, 
-  Clock, 
-  ShieldCheck, 
-  Building, 
-  Mail, 
+import {
+  CheckCircle2,
+  ArrowLeft,
+  Sparkles,
+  Clock,
+  ShieldCheck,
+  Building,
+  Mail,
   ArrowRight,
   FileCheck,
   Calendar,
@@ -76,9 +76,9 @@ export function ThankYouPage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-app)', color: 'var(--text-primary)', paddingTop: '120px', paddingBottom: '90px' }}>
       <div className="container" style={{ maxWidth: '820px', position: 'relative' }}>
-        
+
         {/* Glow ambient background */}
-        <div 
+        <div
           style={{
             position: 'absolute',
             top: '-60px',
@@ -94,18 +94,18 @@ export function ThankYouPage() {
         />
 
         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-          
+
           {/* Main Success Checkmark Avatar */}
-          <div 
-            style={{ 
-              width: '84px', 
-              height: '84px', 
-              borderRadius: '50%', 
-              background: 'linear-gradient(135deg, rgba(212, 255, 79, 0.2) 0%, rgba(212, 255, 79, 0.05) 100%)', 
-              border: '2px solid var(--lime-primary)', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
+          <div
+            style={{
+              width: '84px',
+              height: '84px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, rgba(212, 255, 79, 0.2) 0%, rgba(212, 255, 79, 0.05) 100%)',
+              border: '2px solid var(--lime-primary)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               margin: '0 auto 24px auto',
               boxShadow: '0 0 35px var(--lime-glow)',
               animation: 'scaleUp 0.35s cubic-bezier(0.16, 1, 0.3, 1)'
@@ -123,32 +123,32 @@ export function ThankYouPage() {
           </div>
 
           {/* Title */}
-          <h1 
-            style={{ 
-              fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)', 
-              fontWeight: 900, 
-              lineHeight: 1.15, 
-              letterSpacing: '-0.03em', 
-              marginBottom: '16px' 
+          <h1
+            style={{
+              fontSize: 'clamp(2.2rem, 4.5vw, 3.4rem)',
+              fontWeight: 900,
+              lineHeight: 1.15,
+              letterSpacing: '-0.03em',
+              marginBottom: '16px'
             }}
           >
             Thank You! Your Request Has Been <span className="text-gradient-lime">Received</span>
           </h1>
 
           {/* Subtitle */}
-          <p 
-            style={{ 
-              fontSize: 'clamp(1rem, 1.5vw, 1.18rem)', 
-              color: 'var(--text-secondary)', 
-              lineHeight: 1.65, 
-              maxWidth: '680px', 
-              margin: '0 auto 36px auto' 
+          <p
+            style={{
+              fontSize: 'clamp(1rem, 1.5vw, 1.18rem)',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.65,
+              maxWidth: '680px',
+              margin: '0 auto 36px auto'
             }}
           >
             {state.fullName ? (
               <>Thank you, <strong>{state.fullName}</strong>. </>
             ) : null}
-            Our European solutions desk and lead technical architects are reviewing your details. 
+            Our European solutions desk and lead technical architects are reviewing your details.
             {state.email ? (
               <> A confirmation email has been dispatched to <strong>{state.email}</strong>.</>
             ) : (
@@ -157,7 +157,7 @@ export function ThankYouPage() {
           </p>
 
           {/* Submission Details Card */}
-          <div 
+          <div
             className="bento-card"
             style={{
               background: 'linear-gradient(145deg, #181920 0%, #121316 100%)',
@@ -225,8 +225,8 @@ export function ThankYouPage() {
                 <div style={{ gridColumn: 'span 2' }}>
                   <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', display: 'block', marginBottom: '3px' }}>Confidentiality / NDA</span>
                   <strong style={{ fontSize: '0.88rem', color: state.requestNda ? 'var(--lime-primary)' : 'var(--text-secondary)' }}>
-                    {state.requestNda 
-                      ? '✓ Mutual NDA Requested (Draft will be shared before discovery call)' 
+                    {state.requestNda
+                      ? '✓ Mutual NDA Requested (Draft will be shared before discovery call)'
                       : 'Standard European GDPR Confidentiality Policy'}
                   </strong>
                 </div>
@@ -235,11 +235,11 @@ export function ThankYouPage() {
           </div>
 
           {/* Next Steps 3-Stage Progress Timeline */}
-          <div 
-            style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(3, 1fr)', 
-              gap: '14px', 
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '14px',
               marginBottom: '38px',
               textAlign: 'left'
             }}
@@ -265,7 +265,7 @@ export function ThankYouPage() {
                 active: false
               }
             ].map((st, idx) => (
-              <div 
+              <div
                 key={idx}
                 style={{
                   background: 'rgba(255, 255, 255, 0.03)',
@@ -291,12 +291,12 @@ export function ThankYouPage() {
           </div>
 
           {/* Reassurance Entity Badges */}
-          <div 
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              gap: '24px', 
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '24px',
               flexWrap: 'wrap',
               marginBottom: '40px',
               fontSize: '0.82rem',
@@ -321,10 +321,10 @@ export function ThankYouPage() {
 
           {/* Action Buttons: Prominent Back to Home + Secondary options */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', flexWrap: 'wrap' }}>
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="btn btn-lime btn-lg"
-              style={{ 
+              style={{
                 boxShadow: '0 8px 28px rgba(212, 255, 79, 0.3)',
                 padding: '14px 28px',
                 fontSize: '1rem',
@@ -335,7 +335,7 @@ export function ThankYouPage() {
               <span>Back to Home</span>
             </Link>
 
-            <Link 
+            <Link
               to="/services/website-development"
               className="btn btn-secondary btn-lg"
               style={{ textDecoration: 'none' }}
@@ -344,7 +344,7 @@ export function ThankYouPage() {
               <ArrowRight size={16} />
             </Link>
 
-            <a 
+            <a
               href="/#services"
               className="btn btn-ghost"
               style={{ border: '1px solid rgba(255, 255, 255, 0.1)', textDecoration: 'none' }}
