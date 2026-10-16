@@ -26,6 +26,23 @@ export function ThankYouPage() {
   const selectedServiceObj = SERVICE_OF_INTEREST_OPTIONS.find(o => o.value === state.service);
 
   useEffect(() => {
+    // Fire Google Ads conversion tracking tag for "Submit lead form (5)"
+    try {
+      if (typeof window !== 'undefined') {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          window.dataLayer.push(arguments);
+        }
+        gtag('event', 'conversion', {
+          'send_to': 'AW-18499353482/ATdYCNXug58dEIr3lvVE',
+          'value': 1.0,
+          'currency': 'INR'
+        });
+      }
+    } catch (err) {
+      console.warn('Google Ads conversion tag error:', err);
+    }
+
     // Fire celebratory confetti on page mount
     try {
       confetti({
