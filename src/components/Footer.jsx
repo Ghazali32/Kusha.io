@@ -141,9 +141,27 @@ export function Footer({ onOpenContact }) {
               Governance & Markets
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.88rem' }}>
-              <li><button onClick={() => openLegalModal(legalDocs.privacy.title, legalDocs.privacy.content)} style={{ color: 'var(--text-secondary)' }}>Privacy Policy</button></li>
+              <li>
+                <Link 
+                  to="/privacy" 
+                  style={{ color: 'var(--text-secondary)', textDecoration: 'none', transition: 'color 0.2s ease' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--lime-primary)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
+                >
+                  Privacy Policy
+                </Link>
+              </li>
               <li><button onClick={() => openLegalModal(legalDocs.terms.title, legalDocs.terms.content)} style={{ color: 'var(--text-secondary)' }}>Terms & Conditions</button></li>
-              <li><button onClick={() => openLegalModal(legalDocs.gdpr.title, legalDocs.gdpr.content)} style={{ color: 'var(--text-secondary)' }}>GDPR Compliance</button></li>
+              <li>
+                <Link 
+                  to="/privacy" 
+                  style={{ color: 'var(--text-secondary)', textDecoration: 'none', transition: 'color 0.2s ease' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--lime-primary)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
+                >
+                  GDPR Compliance
+                </Link>
+              </li>
               <li><button onClick={() => openLegalModal(legalDocs.cookies.title, legalDocs.cookies.content)} style={{ color: 'var(--text-secondary)' }}>Cookie Policy</button></li>
               <li><a href="#faq" style={{ color: 'var(--text-secondary)' }}>FAQ</a></li>
             </ul>

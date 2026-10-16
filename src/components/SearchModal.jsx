@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, ArrowRight, Layers, Globe2, Cpu, HelpCircle, BookOpen, Sparkles } from 'lucide-react';
+import { Search, X, ArrowRight, Layers, Globe2, Cpu, HelpCircle, BookOpen, Sparkles, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { websiteData } from '../data/websiteContent';
 
@@ -44,7 +44,9 @@ export function SearchModal({ isOpen, onClose, onSelectService, onOpenContact })
     f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q)
   );
 
-  const hasResults = services.length > 0 || industries.length > 0 || technologies.length > 0 || faqs.length > 0;
+  const matchPrivacy = q.length > 1 && 'privacy policy gdpr compliance data security kvk netherlands legal'.includes(q);
+
+  const hasResults = services.length > 0 || industries.length > 0 || technologies.length > 0 || faqs.length > 0 || matchPrivacy;
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -119,6 +121,41 @@ export function SearchModal({ isOpen, onClose, onSelectService, onOpenContact })
                   <div>
                     <div style={{ fontSize: '0.92rem', fontWeight: 800, color: '#ffffff' }}>Website Development Platform</div>
                     <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)' }}>Responsive Design, AI, CRM Sync, Stripe Workflows & Messaging</div>
+                  </div>
+                </div>
+                <ArrowRight size={15} color="var(--lime-primary)" />
+              </div>
+            </div>
+          )}
+
+          {/* Privacy Policy / GDPR Search Result */}
+          {matchPrivacy && (
+            <div>
+              <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--lime-primary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <ShieldCheck size={12} />
+                <span>Governance & Legal</span>
+              </div>
+              <div
+                onClick={() => {
+                  onClose();
+                  navigate('/privacy');
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '12px 14px',
+                  borderRadius: 'var(--radius-sm)',
+                  background: 'rgba(212, 255, 79, 0.08)',
+                  border: '1px solid var(--lime-border)',
+                  cursor: 'pointer'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <ShieldCheck size={18} color="var(--lime-primary)" />
+                  <div>
+                    <div style={{ fontSize: '0.92rem', fontWeight: 800, color: '#ffffff' }}>Privacy Policy & GDPR Compliance</div>
+                    <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)' }}>Netherlands Entity (KVK 98986708) • EU GDPR Articles 6, 13, 15-21 • Security & Rights</div>
                   </div>
                 </div>
                 <ArrowRight size={15} color="var(--lime-primary)" />

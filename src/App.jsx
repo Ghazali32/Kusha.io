@@ -4,7 +4,9 @@ import { Navbar } from './components/Navbar';
 import { HomePage } from './pages/HomePage';
 import { WebsiteDevelopmentPage } from './pages/WebsiteDevelopmentPage';
 import { ThankYouPage } from './pages/ThankYouPage';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { Footer } from './components/Footer';
+
 
 import { FloatingDock } from './components/FloatingDock';
 import { SearchModal } from './components/SearchModal';
@@ -80,6 +82,18 @@ export function App() {
             path="/thankyou" 
             element={
               <ThankYouPage />
+            } 
+          />
+          <Route 
+            path="/privacy" 
+            element={
+              <PrivacyPolicyPage />
+            } 
+          />
+          <Route 
+            path="/privacy-policy" 
+            element={
+              <PrivacyPolicyPage />
             } 
           />
           {/* Catch-all route: redirects to home */}
