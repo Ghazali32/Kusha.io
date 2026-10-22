@@ -16,21 +16,21 @@ export const CONTACT_SUBMIT_ENDPOINT = `${API_BASE_URL}/api/contact/submit/`;
 
 
 /**
- * Valid options for service_of_interest as defined in API specification:
- * - software_product_engineering
- * - cloud_devops
- * - data_ai
- * - ui_ux_design
- * - consulting
- * - other
+ * Service options available for selection in forms.
+ * Maps specialized website development services to backend enum software_product_engineering
+ * to guarantee compatibility with backend while preserving clear user intent.
  */
 export const SERVICE_OF_INTEREST_OPTIONS = [
-  { value: 'software_product_engineering', label: 'Software & Product Engineering' },
-  { value: 'cloud_devops', label: 'Cloud & DevOps' },
-  { value: 'data_ai', label: 'Data Engineering & AI' },
-  { value: 'ui_ux_design', label: 'UI/UX & Product Design' },
-  { value: 'consulting', label: 'IT Consulting & Technical Strategy' },
-  { value: 'other', label: 'Other / Custom Inquiry' },
+  { value: 'website_development', label: 'Website Development', backendEnum: 'software_product_engineering' },
+  { value: 'website_redesign', label: 'Website Redesign', backendEnum: 'software_product_engineering' },
+  { value: 'custom_web_development', label: 'Custom Web Development', backendEnum: 'software_product_engineering' },
+  { value: 'website_integrations', label: 'Website Integrations', backendEnum: 'software_product_engineering' },
+  { value: 'software_product_engineering', label: 'Software & Product Engineering', backendEnum: 'software_product_engineering' },
+  { value: 'cloud_devops', label: 'Cloud & DevOps', backendEnum: 'cloud_devops' },
+  { value: 'data_ai', label: 'Data Engineering & AI', backendEnum: 'data_ai' },
+  { value: 'ui_ux_design', label: 'UI/UX & Product Design', backendEnum: 'ui_ux_design' },
+  { value: 'consulting', label: 'IT Consulting & Technical Strategy', backendEnum: 'consulting' },
+  { value: 'other', label: 'Other / Custom Inquiry', backendEnum: 'other' },
 ];
 
 /**
@@ -38,8 +38,12 @@ export const SERVICE_OF_INTEREST_OPTIONS = [
  * to a valid service_of_interest enum key.
  */
 export function mapSubjectToService(subject = '') {
-  if (!subject) return 'software_product_engineering';
+  if (!subject) return 'website_development';
   const s = subject.toLowerCase();
+  if (s.includes('redesign')) return 'website_redesign';
+  if (s.includes('custom web') || s.includes('web app')) return 'custom_web_development';
+  if (s.includes('integration') || s.includes('crm sync') || s.includes('stripe')) return 'website_integrations';
+  if (s.includes('website') || s.includes('web development')) return 'website_development';
   if (s.includes('cloud') || s.includes('devops') || s.includes('kubernetes') || s.includes('infra')) {
     return 'cloud_devops';
   }
@@ -52,7 +56,7 @@ export function mapSubjectToService(subject = '') {
   if (s.includes('consult') || s.includes('strategy') || s.includes('advisory') || s.includes('audit')) {
     return 'consulting';
   }
-  if (s.includes('software') || s.includes('engineering') || s.includes('mvp') || s.includes('web') || s.includes('mobile') || s.includes('app') || s.includes('team')) {
+  if (s.includes('software') || s.includes('engineering') || s.includes('mvp') || s.includes('mobile') || s.includes('app') || s.includes('team')) {
     return 'software_product_engineering';
   }
   return 'other';
@@ -111,14 +115,25 @@ export async function submitContactForm({
   let payload;
 
   if (form_type === true) {
+    const matchedService = SERVICE_OF_INTEREST_OPTIONS.find(o => o.value === service_of_interest);
+    const backendServiceKey = matchedService?.backendEnum || service_of_interest || 'software_product_engineering';
+    
+    let finalProjectDetails = project_details?.trim() || '';
+    if (matchedService && matchedService.value !== backendServiceKey) {
+      const header = `[Service: ${matchedService.label}]\n`;
+      if (!finalProjectDetails.includes(header)) {
+        finalProjectDetails = `${header}${finalProjectDetails}`;
+      }
+    }
+
     // 1️⃣ "Start Your Project" Form Request
     payload = {
       form_type: true,
       full_name: full_name?.trim() || '',
       business_email: business_email?.trim() || '',
       country_location: country_location?.trim() || '',
-      service_of_interest: service_of_interest || 'software_product_engineering',
-      project_details: project_details?.trim() || '',
+      service_of_interest: backendServiceKey,
+      project_details: finalProjectDetails,
     };
 
     if (company_name && company_name.trim()) {

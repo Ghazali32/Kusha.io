@@ -1,216 +1,256 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Globe, 
   Smartphone, 
-  BrainCircuit, 
-  Database, 
-  CreditCard, 
-  MessageSquare, 
-  TrendingUp, 
+  RotateCcw, 
+  Code2, 
   CheckCircle2, 
   ArrowRight, 
-  ArrowUpRight, 
   Sparkles, 
   ShieldCheck, 
-  Zap, 
-  Clock, 
-  Users, 
-  Check, 
-  Code2, 
-  Layers, 
-  Calendar, 
-  Bell, 
   Building, 
-  ChevronRight,
-  ExternalLink,
-  ChevronDown,
-  Shield,
-  Search,
-  Sliders
+  ChevronDown, 
+  FileText, 
+  Layers, 
+  Compass, 
+  Check, 
+  MessageSquare,
+  Cpu,
+  Mail,
+  Workflow
 } from 'lucide-react';
-import { ContactForm } from '../components/ContactForm';
 import { Link } from 'react-router-dom';
+import { ContactForm } from '../components/ContactForm';
 
 export function WebsiteDevelopmentPage({ onOpenContact }) {
-  const [activePillar, setActivePillar] = useState(0);
   const [activeFaq, setActiveFaq] = useState(null);
 
-  // 6 Core Pillars as requested by the user
-  const pillars = [
+  // 12. SEO Metadata & Canonical Management
+  useEffect(() => {
+    const originalTitle = document.title;
+    document.title = "Website Development Company | Kusha.io";
+
+    // Set page-specific meta description
+    let metaDesc = document.querySelector('meta[name="description"]');
+    const originalDesc = metaDesc ? metaDesc.getAttribute('content') : null;
+    if (metaDesc) {
+      metaDesc.setAttribute(
+        'content', 
+        'Looking for a website development company? Kusha.io helps businesses build new websites, redesign existing sites and develop custom website functionality.'
+      );
+    }
+
+    // Set canonical link
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    let createdCanonical = false;
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+      createdCanonical = true;
+    }
+    const originalCanonical = canonicalLink.getAttribute('href');
+    canonicalLink.setAttribute('href', 'https://www.kusha.io/services/website-development');
+
+    // Clean up on component unmount
+    return () => {
+      document.title = originalTitle;
+      if (metaDesc && originalDesc) {
+        metaDesc.setAttribute('content', originalDesc);
+      }
+      if (canonicalLink) {
+        if (createdCanonical) {
+          canonicalLink.remove();
+        } else if (originalCanonical) {
+          canonicalLink.setAttribute('href', originalCanonical);
+        }
+      }
+    };
+  }, []);
+
+  // CTA Click Handler with Analytics Measurement
+  const handleCtaClick = (source = 'hero') => {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      try {
+        window.gtag('event', 'click_cta_discuss_project', {
+          event_category: 'engagement',
+          event_label: `Website Development Page - ${source}`
+        });
+      } catch (err) {
+        // Analytics error ignored
+      }
+    }
+
+    const formElement = document.getElementById('enquiry-form');
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: 'smooth' });
+    } else if (onOpenContact) {
+      onOpenContact('project', 'Website Development');
+    }
+  };
+
+  // 5. Website Development Services Cards Data
+  const servicesList = [
     {
-      id: "responsive-website",
-      number: "01",
-      title: "Professional Responsive Website",
-      badge: "Pixel-Perfect & Lightning-Fast",
+      id: "business-website-development",
+      title: "Business Website Development",
+      description: "Create a professional online presence that explains your services, communicates your value and helps potential customers contact your business.",
+      icon: Globe,
+      highlights: [
+        "Structured service presentation and value proposition",
+        "Clear call-to-action placement and lead capture paths",
+        "Modern brand presentation tailored to your business audience"
+      ]
+    },
+    {
+      id: "website-redesign",
+      title: "Website Redesign",
+      description: "Refresh an existing website with an updated layout, clearer content structure and a responsive user experience.",
+      icon: RotateCcw,
+      highlights: [
+        "Modernization of legacy page layouts and typography",
+        "Improved content hierarchy and user navigation paths",
+        "Mobile usability enhancements and code modernization"
+      ]
+    },
+    {
+      id: "custom-web-development",
+      title: "Custom Web Development",
+      description: "Build website features and workflows based on your project requirements, including forms, booking flows and supported third-party integrations.",
+      icon: Code2,
+      highlights: [
+        "Interactive forms, booking flows and quote requests",
+        "Supported API integrations (CRM sync, payments, alerts)",
+        "Component-driven architecture built for extensibility"
+      ]
+    },
+    {
+      id: "responsive-website-development",
+      title: "Responsive Website Development",
+      description: "Create website experiences designed to work across mobile phones, tablets and desktop screens.",
       icon: Smartphone,
-      accentColor: "var(--lime-primary)",
-      shortDesc: "Mobile-first, ultra-performant websites engineered to look stunning and load in sub-seconds across all screen sizes.",
-      description: "We don't build generic template sites. We engineer modern, custom-coded web platforms with responsive fluid layouts, sub-second TTFB, and flawless 100/100 Core Web Vitals scores that give your brand instant authority.",
-      features: [
-        "Fluid responsive design across Mobile, Tablet, Laptop, and Ultrawide monitors",
-        "Sub-second load times with 95+ Google Core Web Vitals performance guarantee",
-        "Modern component-driven stack: React, Next.js, Vite & high-fidelity CSS",
-        "Full WCAG 2.1 AA accessibility compliance and cross-browser resilience",
-        "Interactive micro-animations and polished dark/light mode experiences",
-        "Zero layout shifts (CLS < 0.05) and optimized responsive asset pipelines"
-      ],
-      techStack: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Vite", "Cloudflare CDN"],
-      stats: { metric: "< 0.8s", label: "Average First Contentful Paint" },
-      useCase: "Ideal for fast-scaling startups, corporate entities, and ambitious B2B businesses wanting high credibility."
-    },
-    {
-      id: "ai-integration",
-      number: "02",
-      title: "AI Integration",
-      badge: "Autonomous Intelligence",
-      icon: BrainCircuit,
-      accentColor: "var(--lavender-light)",
-      shortDesc: "Turn your website into an intelligent 24/7 autonomous engine that understands buyer intent and answers complex questions.",
-      description: "Supercharge your online presence with embedded AI assistants, Retrieval-Augmented Generation (RAG) trained on your company knowledge base, smart semantic search, and predictive content personalization.",
-      features: [
-        "24/7 Intelligent AI Copilots trained strictly on your documentation and product catalog",
-        "RAG (Retrieval-Augmented Generation) pipeline for 100% hallucination-free answers",
-        "Semantic vector search that understands customer intent rather than just keywords",
-        "Automated lead qualification scoring and smart objection handling in real-time",
-        "AI-powered meeting preparation summaries generated for your sales team",
-        "Direct integration with OpenAI GPT-4o, Anthropic Claude, and custom vector DBs"
-      ],
-      techStack: ["OpenAI API", "Anthropic Claude", "LangChain", "Pinecone", "LlamaIndex", "FastAPI"],
-      stats: { metric: "24/7", label: "Instant Prospect Engagement" },
-      useCase: "Perfect for technical SaaS, high-ticket services, and companies with deep product catalogs or complex offerings."
-    },
-    {
-      id: "crm-integration",
-      number: "03",
-      title: "CRM Integration",
-      badge: "Real-Time 2-Way Sync",
-      icon: Database,
-      accentColor: "var(--lime-primary)",
-      shortDesc: "Seamless two-way data pipelines between your website interactions and your core customer relationship management platform.",
-      description: "Eliminate manual data entry and never lose another prospect. Every inquiry, page view, download, and booking dynamically updates your sales pipeline in real-time with complete attribution data.",
-      features: [
-        "Bidirectional real-time sync with HubSpot, Salesforce, Zoho CRM, Pipedrive, and Notion",
-        "Automatic contact creation, deal pipeline updates, and company domain enrichment",
-        "Full attribution tracking: UTM parameters, referral sources, and visitor session history",
-        "Custom field mapping and automated lead routing rules to specific account reps",
-        "Webhook triggers, automated follow-up sequences, and task creation for sales teams",
-        "Secure OAuth 2.0 and API token governance with zero data leakage"
-      ],
-      techStack: ["HubSpot API", "Salesforce REST", "Zoho CRM", "Zapier / Make", "n8n", "Webhooks"],
-      stats: { metric: "0 min", label: "Manual Data Entry Overhead" },
-      useCase: "Crucial for B2B sales teams, agency pipelines, and companies investing heavily in marketing and lead tracking."
-    },
-    {
-      id: "workflows-booking-payment",
-      number: "04",
-      title: "Form Submission, Booking & Payment Workflows",
-      badge: "Frictionless Conversion",
-      icon: CreditCard,
-      accentColor: "var(--lavender-light)",
-      shortDesc: "High-converting multi-step forms, real-time calendar scheduling, and frictionless global payment gateways.",
-      description: "Remove every barrier between a curious visitor and a confirmed appointment or closed deal. We design interactive quote builders, live calendar synchronizations, and PCI-compliant one-click checkouts.",
-      features: [
-        "Smart multi-step dynamic forms with conditional branching logic and instant validation",
-        "Automated calendar booking with time-zone synchronization (Calendly, Cal.com, custom slots)",
-        "Secure global payment gateways: Stripe, PayPal, Mollie, Apple Pay, Google Pay, SEPA",
-        "Interactive Project Scope & Cost Estimators that calculate instant quotes on the fly",
-        "Automated invoice generation, PDF receipts, and instant email dispatch upon booking",
-        "Built-in spam prevention, rate limiting, and GDPR-compliant consent capture"
-      ],
-      techStack: ["Stripe Connect", "Cal.com API", "Calendly", "Postmark", "HMAC Signatures"],
-      stats: { metric: "+340%", label: "Average Form Conversion Lift" },
-      useCase: "Ideal for consultative businesses, agencies, software vendors, and digital service providers."
-    },
-    {
-      id: "messaging-integration",
-      number: "05",
-      title: "Messaging Integration",
-      badge: "Instant Omnichannel Alerting",
-      icon: MessageSquare,
-      accentColor: "var(--lime-primary)",
-      shortDesc: "Engage prospects immediately on WhatsApp, Telegram, SMS, or Live Chat, and alert internal teams within seconds.",
-      description: "Speed to lead determines conversion. We connect your website to WhatsApp Business API, Telegram bots, SMS gateways, and internal Slack channels so your team can respond to high-intent inquiries in seconds.",
-      features: [
-        "Official WhatsApp Business Cloud API integration for instant customer messaging",
-        "Live chat widget options (Intercom, Crisp, Drift, or ultra-fast custom WebSockets)",
-        "Instant SMS alerts (via Twilio) dispatched to on-call account managers for urgent leads",
-        "Real-time Slack / Microsoft Teams channel notifications with interactive action buttons",
-        "Unified inbox syncing allowing reps to reply from their preferred messaging tools",
-        "Automated WhatsApp appointment confirmations and calendar reminders"
-      ],
-      techStack: ["WhatsApp Cloud API", "Twilio SMS", "Slack Webhooks", "Intercom", "WebSockets"],
-      stats: { metric: "< 5s", label: "Instant Lead Alert To Your Team" },
-      useCase: "Essential for businesses where closing high-ticket deals requires rapid response times."
-    },
-    {
-      id: "lead-generation-integration",
-      number: "06",
-      title: "Modern Website with Lead Generation Integration",
-      badge: "Engineered Growth Engine",
-      icon: TrendingUp,
-      accentColor: "var(--lavender-light)",
-      shortDesc: "Full-funnel conversion optimization, behavioral tracking, SEO infrastructure, and automated lead capture hooks.",
-      description: "A website is only as valuable as the revenue it generates. We build websites engineered from the ground up to attract organic traffic, track user intent, and turn passive visitors into qualified commercial leads.",
-      features: [
-        "Lead magnets, interactive assessment tools, and gated content delivery pipelines",
-        "Google Tag Manager (GTM) + GA4 full-funnel event tracking and Meta/LinkedIn Pixel integration",
-        "Technical SEO mastery: SSG/SSR rendering, OpenGraph social cards, JSON-LD Schema markup",
-        "A/B testing infrastructure (PostHog / custom telemetry) for continuous CRO experiments",
-        "Exit-intent overlays and contextual bottom-sheet action triggers",
-        "Heatmaps and session recording setup to eliminate user friction points"
-      ],
-      techStack: ["Google Tag Manager", "GA4", "PostHog", "Schema.org JSON-LD", "Cloudflare Edge"],
-      stats: { metric: "3.5x", label: "Higher Commercial Inbound Leads" },
-      useCase: "Designed for ambitious companies scaling paid ads, content marketing, and organic search campaigns."
+      highlights: [
+        "Tested across common phone, tablet and desktop viewports",
+        "Fast-loading assets and optimized layout rendering",
+        "Consistent accessibility and cross-browser reliability"
+      ]
     }
   ];
 
-  // Website Development FAQs
-  const webFaqs = [
+  // 6. Website Development Process Steps Data
+  const processSteps = [
     {
-      q: "How fast can Kusha.io deliver a professional responsive website with AI & CRM integration?",
-      a: "Our agile engineering pods typically deliver a fully custom, responsive website with CRM sync, custom forms, and messaging integrations within 2 to 4 weeks. For complex enterprise portals with advanced RAG AI assistants and multi-tier workflows, timelines range from 4 to 8 weeks with continuous bi-weekly sprint demos."
+      number: "01",
+      title: "Discovery",
+      description: "We understand your business, audience, objectives and project requirements."
     },
     {
-      q: "Which CRMs can be integrated into our new website?",
-      a: "We natively support bidirectional integrations with HubSpot, Salesforce, Zoho CRM, Pipedrive, ActiveCampaign, Notion, and Airtable. We also build custom webhook pipelines using n8n, Make, or custom REST APIs to sync with your internal proprietary databases."
+      number: "02",
+      title: "Planning",
+      description: "We define the website structure, required features and project scope."
     },
     {
-      q: "How does the AI assistant integration work on the website?",
-      a: "We ingest your company documentation, FAQs, product catalog, and past customer inquiries into a secure vector database (Pinecone/Chroma). When a visitor asks questions, the AI retrieves relevant factual context using RAG (Retrieval-Augmented Generation) and provides accurate, brand-aligned answers while capturing their contact details for your sales team."
+      number: "03",
+      title: "Design & Development",
+      description: "We design and develop the agreed website experience."
     },
     {
-      q: "Can the website accept payments and schedule calendar bookings directly?",
-      a: "Yes! We implement complete self-service workflows: automated appointment scheduling via Calendly or Cal.com, and seamless global payments powered by Stripe (supporting credit cards, Apple Pay, Google Pay, SEPA, and local EU payment methods) with instant PDF invoice delivery."
+      number: "04",
+      title: "Testing",
+      description: "We check responsiveness, links, forms and the agreed functionality."
     },
     {
-      q: "How does Kusha.io ensure enterprise-grade security and GDPR compliance?",
-      a: "Kusha.io is a legally registered business entity in the Netherlands (KVK No. 98986708). All web architectures, form submissions, and customer data workflows adhere strictly to EU GDPR regulations. We sign standard mutual NDAs, and our forms use encrypted HTTPS payloads, rate limiting, and secure tokenization."
+      number: "05",
+      title: "Launch",
+      description: "We prepare the website for deployment and discuss any agreed post-launch support."
+    }
+  ];
+
+  // 7. Practical Website Solutions (Honest Alternative to Fabricated Portfolio)
+  const practicalSolutions = [
+    {
+      title: "Service & Business Sites",
+      desc: "Designed for commercial service providers, consulting firms and B2B enterprises needing a credible, clear web presence that communicates core competencies.",
+      features: ["Service breakdown pages", "Direct consultation booking", "Search engine-friendly structure"]
     },
     {
-      q: "Will our in-house marketing team be able to update content easily?",
-      a: "Absolutely. We can connect your website to modern headless CMS platforms (such as Strapi, Sanity, Contentful, or WordPress headless) or provide clean Markdown/JSON content files so your team can publish blog posts, case studies, and landing page copy without needing a developer."
+      title: "Layout & Brand Refresh",
+      desc: "Suitable for businesses with existing websites that feel outdated, difficult to navigate or misaligned with current commercial offerings.",
+      features: ["Cleaner visual hierarchy", "Streamlined mobile layout", "Organized information architecture"]
+    },
+    {
+      title: "Workflow & Form Integrations",
+      desc: "Ideal when you need interactive workflows such as structured quote builders, appointment calendars or direct CRM notifications.",
+      features: ["Custom inquiry routing", "Calendly or Stripe workflows", "Supported webhook sync"]
+    }
+  ];
+
+  // 8. Why Consider Kusha.io Points Data
+  const whyConsiderPoints = [
+    {
+      title: "Website solutions aligned with your project requirements",
+      desc: "We focus on building websites that address your specific business objectives rather than enforcing rigid, one-size-fits-all templates."
+    },
+    {
+      title: "Responsive layouts for mobile and desktop users",
+      desc: "Every website layout is developed to provide a smooth, legible experience on phones, tablets and desktop computers."
+    },
+    {
+      title: "Clear project scope and development process",
+      desc: "We define deliverables and milestones upfront so you understand what is being built, how testing is conducted and what to expect."
+    },
+    {
+      title: "Custom functionality and integrations where appropriate",
+      desc: "From lead capture forms to calendar scheduling and third-party tools, we implement functionality suited to your operational workflows."
+    },
+    {
+      title: "Communication about deliverables, timelines and next steps",
+      desc: "Regular progress updates, reviewable development stages and prompt communication throughout your website project."
+    }
+  ];
+
+  // 9. FAQ Data (Exact 5 Q&As from requirements)
+  const faqs = [
+    {
+      q: "What types of websites can you develop?",
+      a: "We can discuss business websites, redesigns and custom website functionality based on your requirements and our available capabilities."
+    },
+    {
+      q: "Can you redesign my existing website?",
+      a: "Yes. Share your current website and the improvements you need so we can assess the project scope."
+    },
+    {
+      q: "Can you integrate forms, bookings or third-party tools?",
+      a: "Integration options depend on your required workflow, chosen tools and technical feasibility."
+    },
+    {
+      q: "How much does website development cost?",
+      a: "Pricing depends on the website scope, design requirements, functionality and integrations. Share your requirements to discuss an appropriate estimate."
+    },
+    {
+      q: "How long does a website project take?",
+      a: "Timelines depend on project scope, content readiness, feedback and technical requirements. We can discuss a realistic timeline after reviewing your project."
     }
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg-app)', color: 'var(--text-primary)', paddingTop: '110px' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--bg-app)', color: 'var(--text-primary)', paddingTop: '100px' }}>
 
       {/* =========================================================================
-          HERO SECTION
+          4. HERO SECTION
          ========================================================================= */}
       <section style={{ position: 'relative', paddingBottom: '70px', overflow: 'hidden' }}>
-        {/* Glow ambient backdrops */}
+        {/* Subtle ambient lighting */}
         <div 
           style={{
             position: 'absolute',
-            top: '-20%',
+            top: '-15%',
             left: '50%',
             transform: 'translateX(-50%)',
-            width: '800px',
-            height: '450px',
-            background: 'radial-gradient(ellipse at center, rgba(212, 255, 79, 0.12) 0%, rgba(139, 123, 247, 0.08) 50%, transparent 70%)',
-            filter: 'blur(70px)',
+            width: '760px',
+            height: '420px',
+            background: 'radial-gradient(ellipse at center, rgba(212, 255, 79, 0.1) 0%, rgba(139, 123, 247, 0.05) 50%, transparent 70%)',
+            filter: 'blur(75px)',
             pointerEvents: 'none',
             zIndex: 0
           }}
@@ -219,306 +259,173 @@ export function WebsiteDevelopmentPage({ onOpenContact }) {
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           
           {/* Breadcrumb Navigation */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '24px' }}>
-            <Link to="/" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }} className="hover:text-white">
+          <nav aria-label="Breadcrumb" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '24px' }}>
+            <Link to="/" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>
               Home
             </Link>
-            <span>/</span>
+            <span aria-hidden="true">/</span>
             <span style={{ color: 'var(--text-secondary)' }}>Services</span>
-            <span>/</span>
+            <span aria-hidden="true">/</span>
             <span style={{ color: 'var(--lime-primary)', fontWeight: 600 }}>Website Development</span>
-          </div>
+          </nav>
 
-          <div style={{ maxWidth: '960px', margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ maxWidth: '920px', margin: '0 auto', textAlign: 'center' }}>
             
-            {/* Top Glowing Badge */}
-            <div className="section-badge lime" style={{ marginBottom: '22px' }}>
-              <Sparkles size={14} />
-              <span>Full-Stack Web Engineering & Intelligent Growth</span>
+            {/* Top Label Badge */}
+            <div className="section-badge lime" style={{ marginBottom: '20px' }}>
+              <Compass size={14} />
+              <span>Web Development Services & Solutions</span>
             </div>
 
-            {/* Main Headline */}
+            {/* Single Page H1 */}
             <h1 
               style={{ 
-                fontSize: 'clamp(2.4rem, 5.2vw, 4.3rem)', 
+                fontSize: 'clamp(2.3rem, 5vw, 3.8rem)', 
                 fontWeight: 900, 
-                lineHeight: 1.12, 
-                letterSpacing: '-0.035em', 
-                marginBottom: '24px' 
+                lineHeight: 1.15, 
+                letterSpacing: '-0.03em', 
+                marginBottom: '22px',
+                color: '#ffffff'
               }}
             >
-              High-Performance Websites Engineered with{' '}
-              <span className="text-gradient-lime">AI, CRM & Automation</span>
+              Website Development Company for <span className="text-gradient-lime">Growing Businesses</span>
             </h1>
 
-            {/* Subtitle */}
-            <p 
+            {/* Supporting Description */}
+            <div 
               style={{ 
-                fontSize: 'clamp(1.05rem, 1.8vw, 1.25rem)', 
+                fontSize: 'clamp(1.05rem, 1.6vw, 1.2rem)', 
                 color: 'var(--text-secondary)', 
-                lineHeight: 1.65, 
-                marginBottom: '32px',
-                maxWidth: '820px',
+                lineHeight: 1.68, 
+                maxWidth: '780px',
                 margin: '0 auto 32px auto'
               }}
             >
-              We build custom responsive web platforms that do far more than look beautiful. We integrate autonomous AI assistants, 2-way CRM synchronization, frictionless booking/payment workflows, and omnichannel messaging into a unified lead-generating ecosystem.
-            </p>
-
-            {/* Key Capabilities Pills */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', marginBottom: '38px' }}>
-              {[
-                { icon: Smartphone, label: "Responsive Web Design" },
-                { icon: BrainCircuit, label: "Embedded AI Assistants" },
-                { icon: Database, label: "2-Way CRM Sync" },
-                { icon: CreditCard, label: "Stripe & Booking Workflows" },
-                { icon: MessageSquare, label: "WhatsApp & SMS Alerting" },
-                { icon: TrendingUp, label: "Lead Gen Optimization" }
-              ].map((pill, idx) => {
-                const IconComponent = pill.icon;
-                return (
-                  <div 
-                    key={idx}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '7px',
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                      padding: '6px 14px',
-                      borderRadius: '9999px',
-                      fontSize: '0.83rem',
-                      color: '#ffffff',
-                      fontWeight: 600
-                    }}
-                  >
-                    <IconComponent size={14} color="var(--lime-primary)" />
-                    <span>{pill.label}</span>
-                  </div>
-                );
-              })}
+              <p style={{ marginBottom: '12px', fontWeight: 600, color: '#f4f4f5' }}>
+                Build a professional website designed around your business goals.
+              </p>
+              <p style={{ margin: 0 }}>
+                Kusha.io provides website development services for businesses looking to launch a new website, redesign an existing one, or add custom functionality. We focus on responsive design, clear user journeys and practical solutions tailored to your project requirements.
+              </p>
             </div>
 
-            {/* Primary Action Buttons */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', flexWrap: 'wrap' }}>
+            {/* Call-to-Action Buttons */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', flexWrap: 'wrap', marginBottom: '16px' }}>
               <button 
-                onClick={() => onOpenContact('project', 'Website Development & AI Integration')}
+                onClick={() => handleCtaClick('hero-primary')}
                 className="btn btn-lime btn-lg"
-                style={{ boxShadow: '0 8px 30px rgba(212, 255, 79, 0.28)' }}
+                style={{ boxShadow: '0 6px 24px rgba(212, 255, 79, 0.22)' }}
               >
-                <span>Start Your Web Project</span>
+                <span>Discuss Your Website Project</span>
                 <ArrowRight size={18} />
               </button>
 
-              <button 
-                onClick={() => onOpenContact('consultation', 'Web Development Architecture Consultation')}
-                className="btn btn-secondary btn-lg"
-              >
-                <span>Book Free Technical Consultation</span>
-              </button>
-
               <a 
-                href="#services-breakdown"
-                className="btn btn-ghost"
-                style={{ border: '1px solid rgba(255, 255, 255, 0.1)' }}
+                href="#services-overview"
+                className="btn btn-secondary btn-lg"
+                style={{ textDecoration: 'none' }}
               >
-                <Sliders size={16} color="var(--lavender-light)" />
-                <span>Explore 6 Pillars ↓</span>
+                <span>Explore Our Services</span>
               </a>
             </div>
 
-          </div>
+            {/* Supporting Line Below CTA */}
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', margin: 0, fontStyle: 'normal' }}>
+              Looking for a new website or planning to improve your current one? Tell us what you need.
+            </p>
 
-          {/* Quick Metrics Bento Card */}
-          <div 
-            style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(4, 1fr)', 
-              gap: '16px', 
-              marginTop: '60px',
-              background: 'linear-gradient(145deg, #181920 0%, #121317 100%)',
-              border: '1px solid var(--border-medium)',
-              borderRadius: 'var(--radius-xl)',
-              padding: '24px 32px',
-              boxShadow: 'var(--shadow-lg)'
-            }}
-            className="stats-quad-grid"
-          >
-            {[
-              { val: "100/100", label: "Core Web Vitals Performance", desc: "Sub-second speed across all devices" },
-              { val: "24/7", label: "Autonomous AI Lead Capture", desc: "Trained on your business documentation" },
-              { val: "100%", label: "Real-Time CRM Data Accuracy", desc: "Zero manual data entry or lost leads" },
-              { val: "EU + India", label: "Global Hybrid Advantage", desc: "Netherlands KVK 98986708 + India engineering" },
-            ].map((stat, i) => (
-              <div key={i} style={{ borderRight: i < 3 ? '1px solid rgba(255, 255, 255, 0.08)' : 'none', paddingRight: i < 3 ? '20px' : '0' }} className="stat-col">
-                <div style={{ fontSize: '1.9rem', fontWeight: 900, color: 'var(--lime-primary)', fontFamily: 'var(--font-display)', letterSpacing: '-0.02em' }}>
-                  {stat.val}
-                </div>
-                <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#ffffff', marginTop: '4px' }}>
-                  {stat.label}
-                </div>
-                <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                  {stat.desc}
-                </div>
-              </div>
-            ))}
           </div>
 
         </div>
       </section>
 
       {/* =========================================================================
-          THE 6 CORE SERVICES / PILLARS SECTION (User Requested Core Requirements)
+          5. SERVICES SECTION
          ========================================================================= */}
-      <section id="services-breakdown" className="section-spacing" style={{ background: '#0e0f13' }}>
+      <section id="services-overview" className="section-spacing" style={{ background: '#0e0f13', borderTop: '1px solid var(--border-subtle)' }}>
         <div className="container">
 
-          <div className="section-header center">
+          <div className="section-header center" style={{ maxWidth: '780px', margin: '0 auto 48px auto' }}>
             <div className="section-badge lavender">
               <Layers size={14} />
-              <span>Comprehensive Service Scope</span>
+              <span>Core Capabilities</span>
             </div>
             <h2 className="section-title">
-              The 6 Core Pillars of Modern <span className="text-gradient-lavender">Web Development</span>
+              Website Development <span className="text-gradient-lavender">Services</span>
             </h2>
             <p className="section-subtitle">
-              Every modern digital product needs more than clean layout. Explore our 6 specialized disciplines engineered to power your online revenue.
+              We help businesses plan and build websites based on their goals, audience and functional requirements.
             </p>
           </div>
 
-          {/* Interactive Bento Grid for the 6 Core Services */}
+          {/* 4 Clean Service Cards */}
           <div 
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(12, 1fr)',
-              gap: '24px',
-              marginBottom: '48px'
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '24px'
             }}
-            className="pillars-bento-grid"
+            className="services-twocol-grid"
           >
-            {pillars.map((pillar, idx) => {
-              const PillarIcon = pillar.icon;
-              const isEven = idx % 2 === 0;
-
+            {servicesList.map((service, idx) => {
+              const ServiceIcon = service.icon;
               return (
                 <div
-                  key={pillar.id}
+                  key={service.id}
                   className="bento-card"
                   style={{
-                    gridColumn: 'span 6',
-                    background: 'linear-gradient(145deg, #191a21 0%, #131418 100%)',
+                    background: 'linear-gradient(145deg, #181920 0%, #121316 100%)',
                     border: '1px solid var(--border-medium)',
-                    padding: '36px',
+                    padding: '34px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    transition: 'all 0.28s ease',
-                    position: 'relative',
-                    overflow: 'hidden'
+                    borderRadius: 'var(--radius-xl)'
                   }}
                 >
-                  {/* Subtle top indicator line */}
-                  <div 
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      height: '3px',
-                      background: isEven ? 'var(--lime-primary)' : 'var(--lavender-light)'
-                    }}
-                  />
-
                   <div>
-                    {/* Header: Number, Icon, Badge */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '22px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                        <div
-                          style={{
-                            width: '48px',
-                            height: '48px',
-                            borderRadius: '14px',
-                            background: isEven ? 'var(--lime-subtle)' : 'var(--lavender-subtle)',
-                            border: `1px solid ${isEven ? 'var(--lime-border)' : 'var(--lavender-border)'}`,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                          }}
-                        >
-                          <PillarIcon size={24} color={isEven ? 'var(--lime-primary)' : 'var(--lavender-light)'} />
-                        </div>
-                        <div>
-                          <span style={{ fontSize: '0.78rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', fontWeight: 700 }}>
-                            SERVICE #{pillar.number}
-                          </span>
-                          <div style={{ fontSize: '0.75rem', fontWeight: 700, color: isEven ? 'var(--lime-primary)' : 'var(--lavender-light)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                            {pillar.badge}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div 
-                        style={{ 
-                          background: 'rgba(255, 255, 255, 0.05)', 
-                          padding: '6px 14px', 
-                          borderRadius: '9999px', 
-                          fontSize: '0.8rem', 
-                          fontWeight: 700, 
-                          color: '#ffffff' 
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '20px' }}>
+                      <div
+                        style={{
+                          width: '46px',
+                          height: '46px',
+                          borderRadius: '12px',
+                          background: 'rgba(212, 255, 79, 0.08)',
+                          border: '1px solid var(--lime-border)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0
                         }}
                       >
-                        {pillar.stats.metric}
+                        <ServiceIcon size={22} color="var(--lime-primary)" />
                       </div>
+                      <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>
+                        {service.title}
+                      </h3>
                     </div>
 
-                    {/* Title & Narrative */}
-                    <h3 style={{ fontSize: '1.45rem', fontWeight: 800, color: '#ffffff', marginBottom: '12px', lineHeight: 1.3 }}>
-                      {pillar.title}
-                    </h3>
-
-                    <p style={{ fontSize: '0.93rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '22px' }}>
-                      {pillar.description}
+                    <p style={{ fontSize: '0.94rem', color: 'var(--text-secondary)', lineHeight: 1.62, marginBottom: '22px' }}>
+                      {service.description}
                     </p>
 
-                    {/* Features Bullet List */}
-                    <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '9px', marginBottom: '24px' }}>
-                      {pillar.features.map((feat, fIdx) => (
-                        <li key={fIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.86rem', color: '#e4e4e7', lineHeight: 1.5 }}>
-                          <CheckCircle2 size={16} color={isEven ? 'var(--lime-primary)' : 'var(--lavender-light)'} style={{ flexShrink: 0, marginTop: '2px' }} />
-                          <span>{feat}</span>
+                    <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
+                      {service.highlights.map((h, i) => (
+                        <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.86rem', color: '#e4e4e7', lineHeight: 1.5 }}>
+                          <CheckCircle2 size={16} color="var(--lime-primary)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                          <span>{h}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
                   <div>
-                    {/* Tech Badges */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
-                      {pillar.techStack.map((tech) => (
-                        <span 
-                          key={tech} 
-                          style={{
-                            fontSize: '0.74rem',
-                            fontWeight: 600,
-                            padding: '4px 10px',
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            border: '1px solid rgba(255, 255, 255, 0.08)',
-                            borderRadius: '6px',
-                            color: 'var(--text-secondary)'
-                          }}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Card Action */}
                     <button 
-                      onClick={() => onOpenContact('project', `Website Development: ${pillar.title}`)}
+                      onClick={() => handleCtaClick(`service-${service.id}`)}
                       className="btn btn-secondary btn-sm"
                       style={{ width: '100%', justifyContent: 'center' }}
                     >
-                      <span>Inquire About {pillar.title}</span>
+                      <span>Inquire About {service.title}</span>
                       <ArrowRight size={15} />
                     </button>
                   </div>
@@ -531,240 +438,267 @@ export function WebsiteDevelopmentPage({ onOpenContact }) {
       </section>
 
       {/* =========================================================================
-          INTERACTIVE ARCHITECTURE WORKFLOW (VISUAL PIPELINE)
+          6. WEBSITE DEVELOPMENT PROCESS SECTION
          ========================================================================= */}
-      <section className="section-spacing" style={{ background: '#090a0d', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+      <section className="section-spacing" style={{ background: '#0a0b0e', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
         <div className="container">
 
-          <div className="section-header center">
+          <div className="section-header center" style={{ maxWidth: '780px', margin: '0 auto 48px auto' }}>
             <div className="section-badge lime">
-              <Zap size={14} />
-              <span>Unified Technical Pipeline</span>
+              <Workflow size={14} />
+              <span>Structured Roadmap</span>
             </div>
             <h2 className="section-title">
-              How Everything Connects <span className="text-gradient-lime">In Production</span>
+              Our Website Development <span className="text-gradient-lime">Process</span>
             </h2>
             <p className="section-subtitle">
-              From visitor entry to confirmed closed deal — here is how your responsive website, AI, CRM, Stripe, and WhatsApp sync in real-time.
+              A transparent, step-by-step approach to taking your website project from initial concept to launch.
             </p>
           </div>
 
+          {/* Process Timeline */}
           <div 
             style={{ 
               display: 'grid', 
               gridTemplateColumns: 'repeat(5, 1fr)', 
-              gap: '16px',
-              position: 'relative'
+              gap: '16px'
             }}
-            className="pipeline-grid"
+            className="process-horizontal-grid"
           >
-            {[
-              {
-                step: "01",
-                title: "1. Visitor Arrives",
-                desc: "Responsive web loaded via Cloudflare Edge in < 0.8s. GA4 and Meta Pixel track channel attribution.",
-                icon: Globe,
-                badge: "Frontend"
-              },
-              {
-                step: "02",
-                title: "2. AI Interaction",
-                desc: "Autonomous assistant engages the user, clarifies scope, and retrieves answers from knowledge base.",
-                icon: BrainCircuit,
-                badge: "Intelligence"
-              },
-              {
-                step: "03",
-                title: "3. Quote / Booking",
-                desc: "Smart multi-step form triggers Calendly sync or collects credit card deposit via Stripe securely.",
-                icon: CreditCard,
-                badge: "Conversion"
-              },
-              {
-                step: "04",
-                title: "4. CRM 2-Way Sync",
-                desc: "HubSpot / Salesforce auto-creates deal, contact, and company with complete UTM attribution.",
-                icon: Database,
-                badge: "Pipeline"
-              },
-              {
-                step: "05",
-                title: "5. Real-Time Alert",
-                desc: "Instant WhatsApp Cloud API & Slack notifications hit sales reps in < 5 seconds for rapid closing.",
-                icon: Bell,
-                badge: "Closing"
-              }
-            ].map((pipe, idx) => {
-              const PipeIcon = pipe.icon;
-              return (
-                <div 
-                  key={idx}
-                  className="bento-card"
-                  style={{
-                    background: 'linear-gradient(145deg, #16171d 0%, #111215 100%)',
-                    border: '1px solid var(--border-subtle)',
-                    padding: '24px 20px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    minHeight: '260px'
-                  }}
-                >
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                      <span style={{ fontSize: '0.78rem', fontFamily: 'var(--font-mono)', color: 'var(--lime-primary)', fontWeight: 800 }}>
-                        STEP {pipe.step}
-                      </span>
-                      <span style={{ fontSize: '0.7rem', background: 'rgba(255, 255, 255, 0.06)', padding: '3px 8px', borderRadius: '4px', color: 'var(--text-muted)' }}>
-                        {pipe.badge}
-                      </span>
-                    </div>
-
-                    <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'var(--lime-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
-                      <PipeIcon size={20} color="var(--lime-primary)" />
-                    </div>
-
-                    <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#ffffff', marginBottom: '8px' }}>
-                      {pipe.title}
-                    </h4>
-
-                    <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                      {pipe.desc}
-                    </p>
+            {processSteps.map((step, idx) => (
+              <div 
+                key={step.number}
+                className="bento-card"
+                style={{
+                  background: 'linear-gradient(145deg, #16171d 0%, #111215 100%)',
+                  border: '1px solid var(--border-subtle)',
+                  padding: '24px 20px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  borderRadius: 'var(--radius-lg)'
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+                    <span style={{ fontSize: '0.8rem', fontFamily: 'var(--font-mono)', color: 'var(--lime-primary)', fontWeight: 800 }}>
+                      STAGE {step.number}
+                    </span>
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--lime-primary)', opacity: 0.7 }} />
                   </div>
 
-                  <div style={{ marginTop: '14px', paddingTop: '10px', borderTop: '1px solid rgba(255, 255, 255, 0.05)', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.74rem', color: 'var(--lime-primary)' }}>
-                    <Check size={13} />
-                    <span>Automated Event</span>
-                  </div>
+                  <h3 style={{ fontSize: '1.12rem', fontWeight: 800, color: '#ffffff', marginBottom: '10px' }}>
+                    {step.title}
+                  </h3>
+
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+                    {step.description}
+                  </p>
                 </div>
-              );
-            })}
+
+                <div style={{ marginTop: '18px', paddingTop: '10px', borderTop: '1px solid rgba(255, 255, 255, 0.05)', fontSize: '0.74rem', color: 'var(--text-muted)' }}>
+                  Step {idx + 1} of 5
+                </div>
+              </div>
+            ))}
           </div>
 
         </div>
       </section>
 
       {/* =========================================================================
-          COMPARISON TABLE: TRADITIONAL WEBSITES VS KUSHA.IO INTELLIGENT WEB
+          7. PRACTICAL WEBSITE SOLUTIONS FOR YOUR BUSINESS (PORTFOLIO REPLACEMENT)
          ========================================================================= */}
-      <section className="section-spacing" style={{ background: '#0c0d10' }}>
+      <section className="section-spacing" style={{ background: '#0e0f13' }}>
         <div className="container">
 
-          <div className="section-header center">
+          <div className="section-header center" style={{ maxWidth: '820px', margin: '0 auto 44px auto' }}>
             <div className="section-badge lavender">
-              <ShieldCheck size={14} />
-              <span>Why Choose Kusha.io</span>
+              <Sparkles size={14} />
+              <span>Practical Solutions</span>
             </div>
             <h2 className="section-title">
-              Standard Website Agency vs <span className="text-gradient-lavender">Kusha.io Intelligent Platform</span>
+              Practical Website Solutions <span className="text-gradient-lavender">for Your Business</span>
             </h2>
             <p className="section-subtitle">
-              See why high-growth enterprises and ambitious founders choose our full-stack engineering approach.
+              Every website project has different requirements. We focus on understanding your goals, defining the right scope and building an experience suited to your business and audience.
             </p>
           </div>
 
+          {/* Solution Archetypes */}
           <div 
-            style={{ 
-              background: '#14151a', 
-              border: '1px solid var(--border-medium)', 
-              borderRadius: 'var(--radius-xl)', 
-              overflow: 'hidden',
-              boxShadow: 'var(--shadow-lg)'
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '20px',
+              marginBottom: '32px'
+            }}
+            className="solutions-three-grid"
+          >
+            {practicalSolutions.map((sol, i) => (
+              <div 
+                key={i}
+                className="bento-card"
+                style={{
+                  background: 'linear-gradient(145deg, #17181f 0%, #121316 100%)',
+                  border: '1px solid var(--border-medium)',
+                  padding: '28px',
+                  borderRadius: 'var(--radius-lg)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <div>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#ffffff', marginBottom: '12px' }}>
+                    {sol.title}
+                  </h3>
+                  <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '20px' }}>
+                    {sol.desc}
+                  </p>
+                  <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {sol.features.map((feat, fIdx) => (
+                      <li key={fIdx} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: '#d4d4d8' }}>
+                        <Check size={14} color="var(--lime-primary)" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div style={{ marginTop: '22px', paddingTop: '12px', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                  <button 
+                    onClick={() => handleCtaClick('solution-concept')}
+                    style={{ background: 'transparent', border: 'none', color: 'var(--lime-primary)', fontSize: '0.82rem', fontWeight: 700, padding: 0, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                  >
+                    <span>Discuss Similar Scope</span>
+                    <ArrowRight size={13} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Honest Note About Client Work & NDAs */}
+          <div 
+            style={{
+              background: 'rgba(255, 255, 255, 0.02)',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
+              borderRadius: 'var(--radius-md)',
+              padding: '16px 20px',
+              textAlign: 'center',
+              maxWidth: '720px',
+              margin: '0 auto',
+              fontSize: '0.82rem',
+              color: 'var(--text-muted)'
             }}
           >
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '650px' }}>
-                <thead>
-                  <tr style={{ background: '#181920', borderBottom: '1px solid var(--border-subtle)' }}>
-                    <th style={{ padding: '20px 24px', fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 700 }}>Capability</th>
-                    <th style={{ padding: '20px 24px', fontSize: '0.9rem', color: '#a1a1aa', fontWeight: 700 }}>Typical Web Agency</th>
-                    <th style={{ padding: '20px 24px', fontSize: '0.9rem', color: 'var(--lime-primary)', fontWeight: 800, background: 'rgba(212, 255, 79, 0.04)' }}>
-                      Kusha.io Web Engineering
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    {
-                      feat: "Core Architecture",
-                      typical: "Slow WordPress / bloated drag-and-drop builder with 40+ plugins",
-                      kusha: "Custom React / Next.js / TypeScript with zero bloat and clean component code"
-                    },
-                    {
-                      feat: "Page Speed & Vitals",
-                      typical: "3 to 6 second load times, 45-65 Google PageSpeed scores",
-                      kusha: "Sub-second load times (<0.8s) with 95+ Core Web Vitals score guarantee"
-                    },
-                    {
-                      feat: "AI Integration",
-                      typical: "None, or basic third-party iframe widget",
-                      kusha: "Native RAG AI assistant trained on company docs with lead qualification"
-                    },
-                    {
-                      feat: "CRM Syncing",
-                      typical: "Basic form submission forwarded to an inbox (leads get forgotten)",
-                      kusha: "Bidirectional 2-way sync directly into HubSpot, Salesforce, Zoho or Notion"
-                    },
-                    {
-                      feat: "Booking & Payments",
-                      typical: "External link redirects that bleed conversion rates",
-                      kusha: "Frictionless embedded Stripe payments, custom quotes & live calendar booking"
-                    },
-                    {
-                      feat: "Team Alerting",
-                      typical: "Manual email checks, average response time 12-24 hours",
-                      kusha: "Instant WhatsApp Cloud API & Slack alerts to sales reps in < 5 seconds"
-                    },
-                    {
-                      feat: "Legal & Delivery Governance",
-                      typical: "Unvetted overseas freelancers or exorbitant Western agency fees",
-                      kusha: "Netherlands HQ (KVK 98986708) European contracts + scalable India engineering pod"
-                    }
-                  ].map((row, idx) => (
-                    <tr key={idx} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
-                      <td style={{ padding: '18px 24px', fontSize: '0.88rem', fontWeight: 700, color: '#ffffff' }}>
-                        {row.feat}
-                      </td>
-                      <td style={{ padding: '18px 24px', fontSize: '0.85rem', color: '#a1a1aa' }}>
-                        {row.typical}
-                      </td>
-                      <td style={{ padding: '18px 24px', fontSize: '0.85rem', color: '#ffffff', fontWeight: 600, background: 'rgba(212, 255, 79, 0.02)' }}>
-                        <span style={{ color: 'var(--lime-primary)', marginRight: '6px' }}>✓</span>
-                        {row.kusha}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <ShieldCheck size={16} color="var(--lavender-light)" style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '6px' }} />
+            <span>
+              All client contracts and proprietary business codebases are protected under mutual Non-Disclosure Agreements (NDAs). Concept designs and future case study briefs will be published as clearances are finalized.
+            </span>
           </div>
 
         </div>
       </section>
 
       {/* =========================================================================
-          FAQS SPECIFIC TO WEBSITE DEVELOPMENT
+          8. WHY CONSIDER KUSHA.IO? SECTION
          ========================================================================= */}
-      <section className="section-spacing" style={{ background: '#0e0f13' }}>
-        <div className="container" style={{ maxWidth: '860px' }}>
+      <section className="section-spacing" style={{ background: '#090a0d', borderTop: '1px solid var(--border-subtle)' }}>
+        <div className="container">
 
-          <div className="section-header center">
+          <div className="section-header center" style={{ maxWidth: '780px', margin: '0 auto 48px auto' }}>
             <div className="section-badge lime">
-              <Sparkles size={14} />
-              <span>Got Questions?</span>
+              <ShieldCheck size={14} />
+              <span>Honest Value</span>
             </div>
             <h2 className="section-title">
-              Website Development <span className="text-gradient-lime">FAQ</span>
+              Why Consider <span className="text-gradient-lime">Kusha.io?</span>
             </h2>
             <p className="section-subtitle">
-              Common questions about our tech stack, timelines, AI integration, CRM syncing, and delivery terms.
+              Straightforward delivery, responsive layouts and clear communication for businesses looking for a dependable website development partner.
+            </p>
+          </div>
+
+          {/* 5 Why Consider Points */}
+          <div 
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(12, 1fr)',
+              gap: '20px'
+            }}
+            className="why-consider-grid"
+          >
+            {whyConsiderPoints.map((point, idx) => (
+              <div
+                key={idx}
+                className="bento-card"
+                style={{
+                  gridColumn: idx < 2 ? 'span 6' : 'span 4',
+                  background: 'linear-gradient(145deg, #17181e 0%, #121316 100%)',
+                  border: '1px solid var(--border-medium)',
+                  padding: '28px 24px',
+                  borderRadius: 'var(--radius-lg)',
+                  display: 'flex',
+                  gap: '16px'
+                }}
+              >
+                <div 
+                  style={{ 
+                    width: '36px', 
+                    height: '36px', 
+                    borderRadius: '10px', 
+                    background: 'rgba(212, 255, 79, 0.08)', 
+                    border: '1px solid var(--lime-border)', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    flexShrink: 0
+                  }}
+                >
+                  <Check size={18} color="var(--lime-primary)" />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '1.02rem', fontWeight: 800, color: '#ffffff', marginBottom: '8px', lineHeight: 1.35 }}>
+                    {point.title}
+                  </h3>
+                  <p style={{ fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+                    {point.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          9. FAQ SECTION (EXACT 5 ACCESSIBLE QUESTIONS)
+         ========================================================================= */}
+      <section className="section-spacing" style={{ background: '#0e0f13', borderTop: '1px solid var(--border-subtle)' }}>
+        <div className="container" style={{ maxWidth: '840px' }}>
+
+          <div className="section-header center" style={{ marginBottom: '40px' }}>
+            <div className="section-badge lavender">
+              <FileText size={14} />
+              <span>Questions & Answers</span>
+            </div>
+            <h2 className="section-title">
+              Frequently Asked <span className="text-gradient-lavender">Questions</span>
+            </h2>
+            <p className="section-subtitle">
+              Clear answers regarding our website development scope, redesigns, pricing and timelines.
             </p>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {webFaqs.map((faq, idx) => {
+            {faqs.map((faq, idx) => {
               const isOpen = activeFaq === idx;
+              const faqId = `faq-content-${idx}`;
+              const buttonId = `faq-btn-${idx}`;
+
               return (
                 <div 
                   key={idx}
@@ -777,6 +711,10 @@ export function WebsiteDevelopmentPage({ onOpenContact }) {
                   }}
                 >
                   <button
+                    id={buttonId}
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={faqId}
                     onClick={() => setActiveFaq(isOpen ? null : idx)}
                     style={{
                       width: '100%',
@@ -803,11 +741,17 @@ export function WebsiteDevelopmentPage({ onOpenContact }) {
                         flexShrink: 0,
                         marginLeft: '12px'
                       }} 
+                      aria-hidden="true"
                     />
                   </button>
 
                   {isOpen && (
-                    <div style={{ padding: '0 24px 22px 24px', fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+                    <div 
+                      id={faqId}
+                      role="region"
+                      aria-labelledby={buttonId}
+                      style={{ padding: '0 24px 22px 24px', fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}
+                    >
                       {faq.a}
                     </div>
                   )}
@@ -820,21 +764,21 @@ export function WebsiteDevelopmentPage({ onOpenContact }) {
       </section>
 
       {/* =========================================================================
-          IN-PAGE CONTACT SECTION & ESTIMATE REQUEST
+          10. FINAL CTA SECTION & 11. PROJECT ENQUIRY FORM
          ========================================================================= */}
-      <section className="section-spacing" style={{ background: '#090a0d', borderTop: '1px solid var(--border-subtle)' }}>
+      <section id="enquiry-form" className="section-spacing" style={{ background: '#0a0b0e', borderTop: '1px solid var(--border-subtle)' }}>
         <div className="container">
 
-          <div className="section-header center">
+          <div className="section-header center" style={{ maxWidth: '780px', margin: '0 auto 44px auto' }}>
             <div className="section-badge lime">
-              <Zap size={14} />
-              <span>Let's Build It</span>
+              <MessageSquare size={14} />
+              <span>Let's Discuss Your Project</span>
             </div>
             <h2 className="section-title">
-              Ready to Upgrade Your <span className="text-gradient-lime">Website Platform?</span>
+              Have a Website Project in <span className="text-gradient-lime">Mind?</span>
             </h2>
             <p className="section-subtitle">
-              Send us your project details or book a free discovery session. We will get back to you within 24 business hours with an initial architecture roadmap and estimated scope.
+              Tell us about your business and the website you want to build. We’ll review your requirements and discuss the next steps.
             </p>
           </div>
 
@@ -847,7 +791,7 @@ export function WebsiteDevelopmentPage({ onOpenContact }) {
             }}
             className="contact-main-grid"
           >
-            {/* Left Column: Why Partner with Kusha.io */}
+            {/* Left Column: Direct Contact & Honest Company Info */}
             <div 
               className="bento-card" 
               style={{ 
@@ -857,68 +801,70 @@ export function WebsiteDevelopmentPage({ onOpenContact }) {
                 padding: '36px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                borderRadius: 'var(--radius-xl)'
               }}
             >
               <div>
                 <span style={{ fontSize: '0.78rem', color: 'var(--lime-primary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  Web Development Services
+                  Project Scoping & Enquiries
                 </span>
-                <h3 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#ffffff', marginTop: '6px', marginBottom: '18px' }}>
-                  Start Your Web Transformation
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#ffffff', marginTop: '6px', marginBottom: '16px' }}>
+                  Discuss Your Website Project
                 </h3>
 
-                <p style={{ fontSize: '0.94rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '24px' }}>
-                  Whether you need a brand-new responsive website, custom AI agents, automated CRM pipeline sync, or Stripe payment integration, our hybrid team is ready.
+                <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '24px' }}>
+                  Submit your details using the form. We review the scope, prepare technical clarifying questions if needed, and respond within 24 business hours.
                 </p>
 
-                <h4 style={{ fontSize: '0.88rem', fontWeight: 700, color: '#ffffff', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                  What You Get with Kusha.io:
+                <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: '#ffffff', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  What You Can Expect:
                 </h4>
 
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '28px' }}>
+                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '28px' }}>
                   {[
-                    '100% custom codebase, zero slow bloated templates',
-                    'Bi-weekly sprint demos and reviewable GitHub milestones',
-                    'Mutual Non-Disclosure Agreement (NDA) standard practice',
-                    'Direct access to senior full-stack architects in your timezone',
-                    'Full post-launch warranty, ongoing support & maintenance'
-                  ].map((r, i) => (
-                    <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
+                    'Direct review of your requirements by our engineering desk',
+                    'Clear scoping of required pages, design and functionality',
+                    'Mutual Non-Disclosure Agreement (NDA) available upon request',
+                    'Transparent communication regarding deliverables and next steps'
+                  ].map((item, idx) => (
+                    <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                       <CheckCircle2 size={16} color="var(--lime-primary)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                      <span>{r}</span>
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Company & Legal Box */}
+              {/* Verified Legal Entity Card */}
               <div style={{ background: 'var(--bg-subtle)', padding: '20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                   <Building size={16} color="var(--lavender-light)" />
                   <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#ffffff' }}>Kusha.io</span>
                 </div>
                 <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Registered in the Netherlands</div>
-                <div style={{ fontSize: '0.82rem', color: 'var(--lime-primary)', fontWeight: 700 }}>KVK No. 98986708</div>
-                <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: '6px' }}>
-                  Direct Solutions Desk: <a href="mailto:info@kusha.io" style={{ color: '#ffffff', textDecoration: 'underline' }}>info@kusha.io</a>
+                <div style={{ fontSize: '0.82rem', color: 'var(--lime-primary)', fontWeight: 700 }}>Chamber of Commerce (KVK No. 98986708)</div>
+                <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <Mail size={13} />
+                  <span>Email: <a href="mailto:info@kusha.io" style={{ color: '#ffffff', textDecoration: 'underline' }}>info@kusha.io</a></span>
                 </div>
               </div>
             </div>
 
-            {/* Right Column: API-connected Contact Form */}
+            {/* Right Column: API-connected Enquiry Form */}
             <div 
               className="bento-card" 
               style={{ 
                 gridColumn: 'span 7',
                 padding: '36px',
                 background: 'linear-gradient(145deg, #181920 0%, #14151a 100%)',
-                border: '1px solid var(--border-medium)'
+                border: '1px solid var(--border-medium)',
+                borderRadius: 'var(--radius-xl)'
               }}
             >
               <ContactForm 
                 initialType="project"
-                initialSubject="Website Development & AI Integration"
+                initialSubject="Website Development"
                 isModal={false}
               />
             </div>
@@ -930,30 +876,20 @@ export function WebsiteDevelopmentPage({ onOpenContact }) {
       {/* Responsive media query adjustments */}
       <style>{`
         @media (max-width: 1024px) {
-          .pillars-bento-grid > div {
+          .services-twocol-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .process-horizontal-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .solutions-three-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .why-consider-grid > div {
             grid-column: span 12 !important;
           }
-          .stats-quad-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-          .pipeline-grid {
-            grid-template-columns: repeat(1, 1fr) !important;
-          }
-        }
-        @media (max-width: 768px) {
-          .stats-quad-grid {
-            grid-template-columns: repeat(1, 1fr) !important;
-          }
-          .stat-col {
-            border-right: none !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 16px;
-            margin-bottom: 16px;
-          }
-          .stat-col:last-child {
-            border-bottom: none !important;
-            padding-bottom: 0;
-            margin-bottom: 0;
+          .contact-main-grid > div {
+            grid-column: span 12 !important;
           }
         }
       `}</style>

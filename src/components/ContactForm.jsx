@@ -28,7 +28,7 @@ export function ContactForm({
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(initialType === 'consultation' ? 'consultation' : 'project');
 
-  
+  const idPrefix = isModal ? 'modal-' : 'page-';
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -36,7 +36,7 @@ export function ContactForm({
     country: '',
     service: mapSubjectToService(initialSubject),
     projectDetails: initialSubject ? `Inquiry regarding: ${initialSubject}\n\n` : '',
-    requestNda: true,
+    requestNda: false,
   });
 
   const [loading, setLoading] = useState(false);
@@ -372,8 +372,9 @@ export function ContactForm({
         {/* Name & Business Email */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '14px', marginBottom: '14px' }} className="contact-subgrid">
           <div>
-            <label className="form-label">Full Name *</label>
+            <label htmlFor={`${idPrefix}fullName`} className="form-label">Full Name *</label>
             <input 
+              id={`${idPrefix}fullName`}
               type="text" 
               required
               disabled={loading}
@@ -391,8 +392,9 @@ export function ContactForm({
           </div>
 
           <div>
-            <label className="form-label">Business Email *</label>
+            <label htmlFor={`${idPrefix}email`} className="form-label">Business Email *</label>
             <input 
+              id={`${idPrefix}email`}
               type="email" 
               required 
               disabled={loading}
@@ -413,8 +415,9 @@ export function ContactForm({
         {/* Company Name & Country/Location */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '14px', marginBottom: '14px' }} className="contact-subgrid">
           <div>
-            <label className="form-label">Company Name <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(Optional)</span></label>
+            <label htmlFor={`${idPrefix}company`} className="form-label">Company Name <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(Optional)</span></label>
             <input 
+              id={`${idPrefix}company`}
               type="text" 
               disabled={loading}
               className={`form-input ${fieldErrors.company ? 'is-invalid' : ''}`}
@@ -431,8 +434,9 @@ export function ContactForm({
           </div>
 
           <div>
-            <label className="form-label">Country / Location *</label>
+            <label htmlFor={`${idPrefix}country`} className="form-label">Country / Location *</label>
             <input 
+              id={`${idPrefix}country`}
               type="text" 
               required 
               disabled={loading}
@@ -455,8 +459,9 @@ export function ContactForm({
           <>
             {/* Service of Interest */}
             <div className="form-group" style={{ marginBottom: '14px' }}>
-              <label className="form-label">Service of Interest *</label>
+              <label htmlFor={`${idPrefix}service`} className="form-label">Service of Interest *</label>
               <select 
+                id={`${idPrefix}service`}
                 className={`form-select ${fieldErrors.service ? 'is-invalid' : ''}`}
                 disabled={loading}
                 value={formData.service}
@@ -478,12 +483,13 @@ export function ContactForm({
 
             {/* Project Details */}
             <div className="form-group" style={{ marginBottom: '16px' }}>
-              <label className="form-label">Project Details *</label>
+              <label htmlFor={`${idPrefix}projectDetails`} className="form-label">Project Details *</label>
               <textarea 
+                id={`${idPrefix}projectDetails`}
                 rows={isModal ? 3 : 4}
                 disabled={loading}
                 className={`form-textarea ${fieldErrors.projectDetails ? 'is-invalid' : ''}`}
-                placeholder="Briefly describe your project requirements, scope, tech stack preferences, or goals..."
+                placeholder="Tell us about your website requirements, business goals, required features (e.g. new website, redesign, forms, booking, integrations), or timeline..."
                 value={formData.projectDetails}
                 onChange={(e) => handleChange('projectDetails', e.target.value)}
               />
@@ -497,8 +503,9 @@ export function ContactForm({
 
             {/* NDA Checkbox */}
             <div style={{ marginBottom: '22px' }}>
-              <label className="form-checkbox-label">
+              <label htmlFor={`${idPrefix}requestNda`} className="form-checkbox-label">
                 <input 
+                  id={`${idPrefix}requestNda`}
                   type="checkbox"
                   disabled={loading}
                   className="form-checkbox"
@@ -538,7 +545,7 @@ export function ContactForm({
         </button>
 
         {/* Security & Confidentiality Footer */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', marginTop: '16px', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginTop: '16px', fontSize: '0.78rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
             <ShieldCheck size={13} color="var(--lime-primary)" />
             Confidential & Secure
@@ -546,7 +553,11 @@ export function ContactForm({
           <span>•</span>
           <span>Zero Obligation</span>
           <span>•</span>
-          <span>Direct: info@kusha.io</span>
+          <Link to="/privacy" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>
+            Privacy Policy
+          </Link>
+          <span>•</span>
+          <span>info@kusha.io</span>
         </div>
       </form>
     </div>
