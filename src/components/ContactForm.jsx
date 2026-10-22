@@ -17,7 +17,7 @@ import {
   SERVICE_OF_INTEREST_OPTIONS, 
   mapSubjectToService 
 } from '../services/contactApi';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export function ContactForm({ 
   initialType = 'project', 
