@@ -52,6 +52,23 @@ export function ContactForm({
     }
   }, [initialType]);
 
+  // Listen for external tab switch events (e.g. from dock or hero buttons)
+  useEffect(() => {
+    const handleSwitchTab = (e) => {
+      const targetTab = e.detail && (typeof e.detail === 'string' ? e.detail : e.detail.tab);
+      const targetScope = e.detail && e.detail.target;
+      if (targetTab === 'consultation' || targetTab === 'project') {
+        if (!targetScope || (targetScope === 'modal' && isModal) || (targetScope === 'page' && !isModal)) {
+          setActiveTab(targetTab);
+          setFieldErrors({});
+          setGeneralError(null);
+        }
+      }
+    };
+    window.addEventListener('switch-contact-tab', handleSwitchTab);
+    return () => window.removeEventListener('switch-contact-tab', handleSwitchTab);
+  }, [isModal]);
+
   useEffect(() => {
     if (initialSubject) {
       setFormData(prev => ({
@@ -314,6 +331,8 @@ export function ContactForm({
         <div className="pill-switch">
           <button
             type="button"
+            id={`${idPrefix}tab-project`}
+            data-tab="project"
             className={`pill-switch-item ${isProject ? 'active' : ''}`}
             onClick={() => handleTabChange('project')}
           >
@@ -321,6 +340,8 @@ export function ContactForm({
           </button>
           <button
             type="button"
+            id={`${idPrefix}tab-consultation`}
+            data-tab="consultation"
             className={`pill-switch-item ${!isProject ? 'active' : ''}`}
             onClick={() => handleTabChange('consultation')}
           >

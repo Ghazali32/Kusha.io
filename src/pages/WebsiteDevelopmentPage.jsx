@@ -509,7 +509,7 @@ export function WebsiteDevelopmentPage({ onOpenContact }) {
       {/* =========================================================================
           7. PRACTICAL WEBSITE SOLUTIONS FOR YOUR BUSINESS (PORTFOLIO REPLACEMENT)
          ========================================================================= */}
-      <section className="section-spacing" style={{ background: '#0e0f13' }}>
+      <section id="solutions" className="section-spacing" style={{ background: '#0e0f13' }}>
         <div className="container">
 
           <div className="section-header center" style={{ maxWidth: '820px', margin: '0 auto 44px auto' }}>
@@ -677,7 +677,7 @@ export function WebsiteDevelopmentPage({ onOpenContact }) {
       {/* =========================================================================
           9. FAQ SECTION (EXACT 5 ACCESSIBLE QUESTIONS)
          ========================================================================= */}
-      <section className="section-spacing" style={{ background: '#0e0f13', borderTop: '1px solid var(--border-subtle)' }}>
+      <section id="faq" className="section-spacing" style={{ background: '#0e0f13', borderTop: '1px solid var(--border-subtle)' }}>
         <div className="container" style={{ maxWidth: '840px' }}>
 
           <div className="section-header center" style={{ marginBottom: '40px' }}>

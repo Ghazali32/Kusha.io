@@ -7,6 +7,7 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const closeTimeoutRef = useRef(null);
 
   const location = useLocation();
   const isHome = location.pathname === '/';
@@ -20,15 +21,51 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Hover handlers with debounce / grace period to prevent abrupt closing
+  const handleDropdownMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setServicesDropdownOpen(true);
+  };
+
+  const handleDropdownMouseLeave = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    closeTimeoutRef.current = setTimeout(() => {
+      setServicesDropdownOpen(false);
+    }, 300); // 300ms forgiving grace period
+  };
+
+  const handleDropdownToggle = (e) => {
+    e.stopPropagation();
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setServicesDropdownOpen((prev) => !prev);
+  };
+
   // Close dropdown on outside click
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        if (closeTimeoutRef.current) {
+          clearTimeout(closeTimeoutRef.current);
+          closeTimeoutRef.current = null;
+        }
         setServicesDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
   }, []);
 
   const navLinks = [
@@ -112,12 +149,12 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
                   key={link.label}
                   ref={dropdownRef}
                   style={{ position: 'relative' }}
-                  onMouseEnter={() => setServicesDropdownOpen(true)}
-                  onMouseLeave={() => setServicesDropdownOpen(false)}
+                  onMouseEnter={handleDropdownMouseEnter}
+                  onMouseLeave={handleDropdownMouseLeave}
                 >
                   <button
                     type="button"
-                    onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
+                    onClick={handleDropdownToggle}
                     style={{
                       fontSize: '0.85rem',
                       fontWeight: 600,
@@ -137,7 +174,7 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
                     <ChevronDown size={14} style={{ transform: servicesDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
                   </button>
 
-                  {/* Services Popover / Dropdown */}
+                  {/* Services Popover / Dropdown with invisible hover bridge */}
                   {servicesDropdownOpen && (
                     <div
                       style={{
@@ -145,77 +182,90 @@ export function Navbar({ onOpenContact, onOpenSearch }) {
                         top: '100%',
                         left: '50%',
                         transform: 'translateX(-50%)',
-                        marginTop: '10px',
+                        paddingTop: '8px', /* Invisible hover bridge: cursor never leaves hit area */
                         width: '340px',
-                        background: '#16171d',
-                        border: '1px solid var(--border-medium)',
-                        borderRadius: 'var(--radius-lg)',
-                        padding: '12px',
-                        boxShadow: '0 16px 40px rgba(0, 0, 0, 0.7)',
                         zIndex: 200,
-                        animation: 'fadeIn 0.2s ease-out'
                       }}
+                      onMouseEnter={handleDropdownMouseEnter}
+                      onMouseLeave={handleDropdownMouseLeave}
                     >
-                      {/* Featured Highlight Item: Website Development */}
-                      <Link
-                        to="/services/website-development"
-                        onClick={() => setServicesDropdownOpen(false)}
+                      <div
                         style={{
-                          display: 'block',
-                          padding: '12px 14px',
-                          borderRadius: 'var(--radius-md)',
-                          background: 'linear-gradient(135deg, rgba(212, 255, 79, 0.12) 0%, rgba(139, 123, 247, 0.08) 100%)',
-                          border: '1px solid var(--lime-border)',
-                          textDecoration: 'none',
-                          marginBottom: '8px',
-                          transition: 'all 0.18s ease'
+                          background: '#16171d',
+                          border: '1px solid var(--border-medium)',
+                          borderRadius: 'var(--radius-lg)',
+                          padding: '12px',
+                          boxShadow: '0 16px 40px rgba(0, 0, 0, 0.7)',
+                          animation: 'fadeIn 0.2s ease-out'
                         }}
                       >
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-                          <span style={{ fontSize: '0.88rem', fontWeight: 800, color: '#ffffff', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <Sparkles size={14} color="var(--lime-primary)" />
-                            Website Development
-                          </span>
-                          <span style={{ fontSize: '0.65rem', fontWeight: 800, background: 'var(--lime-primary)', color: '#000', padding: '2px 6px', borderRadius: '4px' }}>
-                            FEATURED
-                          </span>
-                        </div>
-                        <p style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.4 }}>
-                          Responsive, AI Assistant, 2-Way CRM Sync, Stripe Workflows & Messaging
-                        </p>
-                      </Link>
+                        {/* Featured Highlight Item: Website Development */}
+                        <Link
+                          to="/services/website-development"
+                          onClick={() => {
+                            if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+                            setServicesDropdownOpen(false);
+                          }}
+                          style={{
+                            display: 'block',
+                            padding: '12px 14px',
+                            borderRadius: 'var(--radius-md)',
+                            background: 'linear-gradient(135deg, rgba(212, 255, 79, 0.12) 0%, rgba(139, 123, 247, 0.08) 100%)',
+                            border: '1px solid var(--lime-border)',
+                            textDecoration: 'none',
+                            marginBottom: '8px',
+                            transition: 'all 0.18s ease'
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                            <span style={{ fontSize: '0.88rem', fontWeight: 800, color: '#ffffff', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <Sparkles size={14} color="var(--lime-primary)" />
+                              Website Development
+                            </span>
+                            <span style={{ fontSize: '0.65rem', fontWeight: 800, background: 'var(--lime-primary)', color: '#000', padding: '2px 6px', borderRadius: '4px' }}>
+                              FEATURED
+                            </span>
+                          </div>
+                          <p style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.4 }}>
+                            Responsive, AI Assistant, 2-Way CRM Sync, Stripe Workflows & Messaging
+                          </p>
+                        </Link>
 
-                      {/* General Services Link */}
-                      <a
-                        href={isHome ? '#services' : '/#services'}
-                        onClick={() => setServicesDropdownOpen(false)}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '10px 14px',
-                          borderRadius: 'var(--radius-md)',
-                          color: 'var(--text-secondary)',
-                          textDecoration: 'none',
-                          fontSize: '0.82rem',
-                          fontWeight: 600,
-                          transition: 'background 0.18s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                          e.currentTarget.style.color = '#ffffff';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'transparent';
-                          e.currentTarget.style.color = 'var(--text-secondary)';
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <Layers size={15} color="var(--lavender-light)" />
-                          <span>All 10 Core Capabilities</span>
-                        </div>
-                        <ArrowRight size={13} />
-                      </a>
+                        {/* General Services Link */}
+                        <a
+                          href={isHome ? '#services' : '/#services'}
+                          onClick={() => {
+                            if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+                            setServicesDropdownOpen(false);
+                          }}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '10px 14px',
+                            borderRadius: 'var(--radius-md)',
+                            color: 'var(--text-secondary)',
+                            textDecoration: 'none',
+                            fontSize: '0.82rem',
+                            fontWeight: 600,
+                            transition: 'background 0.18s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                            e.currentTarget.style.color = '#ffffff';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'transparent';
+                            e.currentTarget.style.color = 'var(--text-secondary)';
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <Layers size={15} color="var(--lavender-light)" />
+                            <span>All 10 Core Capabilities</span>
+                          </div>
+                          <ArrowRight size={13} />
+                        </a>
+                      </div>
                     </div>
                   )}
                 </div>
