@@ -10,13 +10,21 @@ import {
 } from 'lucide-react';
 import { ContactForm } from './ContactForm';
 
-export function ContactModalAndSection({ isOpen, onClose, initialType = 'project', initialSubject = '' }) {
+export function ContactModalAndSection({ 
+  isOpen, 
+  onClose, 
+  initialType = 'project', 
+  initialSubject = '',
+  modalOnly = false,
+  sectionOnly = false
+}) {
   return (
     <>
       {/* ==========================================================================
           IN-PAGE CONTACT SECTION (ANCHOR #contact)
          ========================================================================== */}
-      <section id="contact" className="section-spacing" style={{ background: '#0e0f13' }}>
+      {!modalOnly && (
+        <section id="contact" className="section-spacing" style={{ background: '#0e0f13' }}>
         <div className="container">
           
           <div className="section-header center">
@@ -137,12 +145,13 @@ export function ContactModalAndSection({ isOpen, onClose, initialType = 'project
             }
           }
         `}</style>
-      </section>
+        </section>
+      )}
 
       {/* ==========================================================================
           GLOBAL POPUP MODAL (TRIGGERED VIA HEADER/HERO/DOCK BUTTONS)
          ========================================================================== */}
-      {isOpen && (
+      {!sectionOnly && isOpen && (
         <div className="modal-backdrop" onClick={onClose}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '680px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>

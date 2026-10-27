@@ -67,10 +67,9 @@ export function HomePage({ onOpenContact, onOpenScoper, contactModalOpen, setCon
 
       {/* Comprehensive In-Page Contact & Project Scoping Form */}
       <ContactModalAndSection 
-        isOpen={contactModalOpen}
-        onClose={() => setContactModalOpen(false)}
-        initialType={contactType}
-        initialSubject={contactSubject}
+        initialType="project"
+        initialSubject=""
+        sectionOnly={true}
       />
     </>
   );
